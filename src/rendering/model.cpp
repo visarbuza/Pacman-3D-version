@@ -130,6 +130,7 @@ void Model::load(const std::string& filepath_obj, const std::string& diffuse_pat
 
 void Model::draw(glm::vec3 position, glm::mat4 lookAt) {
   auto model = glm::translate(glm::mat4(1.f), position);
+  model = glm::scale(model, glm::vec3(0.2f,0.2f, 0.2f));
   auto view = lookAt;  // glm::lookAt(glm::vec3(-100.f, 200.f, -100.f), {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
   auto proj = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
   auto normal_matrix = glm::mat3(glm::inverse(glm::transpose(view * model)));
