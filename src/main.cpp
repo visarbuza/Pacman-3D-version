@@ -70,13 +70,13 @@ int main() {
     lastFrame = currentFrame;
 
     // render
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // activate shader
     ourShader.use();
 
-    model.draw(glm::vec3(0.f, 0.f, 0.f), camera.GetViewMatrix());
+    model.draw(glm::vec3(0.0f, 0.f, 0.0f), glfwGetTime() * 100, camera.GetViewMatrix());
 
     processInput(window, deltaTime);
     glfwSwapBuffers(window);
