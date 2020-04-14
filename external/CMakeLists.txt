@@ -2,6 +2,7 @@
 add_subdirectory(glad)
 add_subdirectory(gfx)
 add_subdirectory(stb)
+add_subdirectory(tiny_obj_loader)
 include(${CMAKE_CURRENT_LIST_DIR}/glfw.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/glm.cmake)
 

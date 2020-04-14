@@ -13,6 +13,10 @@ target_sources(
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include/shader.h
     ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/model.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/rendering/model.cpp
+      ${CMAKE_CURRENT_LIST_DIR}/include/texture.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/rendering/texture.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
 )
 
@@ -33,6 +37,7 @@ target_link_libraries(
     glm
     glfw
     stbimage::stbimage
+    tinyobj::tinyobj
 )
 
 # Enable C++ 17
