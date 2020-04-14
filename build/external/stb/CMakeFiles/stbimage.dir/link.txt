@@ -1,2 +1,0 @@
-/usr/bin/ar qc libstbimage.a  CMakeFiles/stbimage.dir/stb_image_impl.cpp.o
-/usr/bin/ranlib libstbimage.a

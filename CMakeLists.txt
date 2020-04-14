@@ -13,6 +13,8 @@ target_sources(
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include/shader.h
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
 )
 
 # Set include directories
