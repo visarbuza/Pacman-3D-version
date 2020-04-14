@@ -5,17 +5,12 @@
 #include <tiny_obj_loader.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <shader.h>
 
 /** Constants for vertex attribute locations */
 constexpr auto va_position = 0;
 constexpr auto va_normal = 1;
 constexpr auto va_texcoord = 2;
-
-/** Constants for uniform locations */
-constexpr auto ul_mat_model = 0;
-constexpr auto ul_mat_view = 1;
-constexpr auto ul_mat_proj = 2;
-constexpr auto ul_mat_normal = 3;
 
 /** Constants for texture sampler bindings */
 constexpr auto tb_diffuse = 0;
@@ -132,14 +127,14 @@ void Model::draw(glm::vec3 position, float rotation, glm::mat4 lookAt) {
   auto model = glm::translate(glm::mat4(1.f), position);
   model = glm::scale(model, glm::vec3(0.2f,0.2f, 0.2f));
   model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-  auto view = lookAt;  // glm::lookAt(glm::vec3(-100.f, 200.f, -100.f), {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
+  auto view = lookAt;
   auto proj = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
   auto normal_matrix = glm::mat3(glm::inverse(glm::transpose(view * model)));
 
-  glUniformMatrix4fv(ul_mat_model, 1, GL_FALSE, glm::value_ptr(model));
-  glUniformMatrix4fv(ul_mat_view, 1, GL_FALSE, glm::value_ptr(view));
-  glUniformMatrix4fv(ul_mat_proj, 1, GL_FALSE, glm::value_ptr(proj));
-  glUniformMatrix3fv(ul_mat_normal, 1, GL_FALSE, glm::value_ptr(normal_matrix));
+  Shader::setModelMat(model);
+  Shader::setViewMat(view);
+  Shader::setProjMat(proj);
+  Shader::setNormalMat(normal_matrix);
 
   glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
