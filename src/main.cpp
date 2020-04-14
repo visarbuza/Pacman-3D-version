@@ -59,7 +59,7 @@ int main() {
   Shader ourShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
 
   auto model = Model();
-  model.load("resources/obj/axe.obj", "resources/obj/axe_color.png");
+  model.load("resources/models/axe.obj", "resources/models/axe_color.png");
 
   ourShader.use();
 
