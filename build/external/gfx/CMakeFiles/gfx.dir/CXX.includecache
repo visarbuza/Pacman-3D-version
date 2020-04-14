@@ -1,0 +1,50 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../external/gfx/include/gfx.h
+cstdio
+-
+cstdlib
+-
+cstdarg
+-
+cstring
+-
+vector
+-
+Windows.h
+-
+imgui.h
+../external/gfx/include/imgui.h
+algorithm
+-
+vector
+-
+cinttypes
+-
+
+../external/glad/glad/include/glad/KHR/khrplatform.h
+stdint.h
+-
+inttypes.h
+-
+stdint.h
+-
+
+../external/glad/glad/include/glad/glad.h
+windows.h
+-
+KHR/khrplatform.h
+../external/glad/glad/include/glad/KHR/khrplatform.h
+
+/home/visar/Documents/NTNU/Courses/Graphics Programming/Exercise/Camera/external/gfx/src/gfx.cpp
+glad/glad.h
+-
+gfx.h
+-
+

@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../external/stb/include/stb_image.h
+stb_image.h
+../external/stb/include/stb_image.h
+stdio.h
+-
+stdarg.h
+-
+stddef.h
+-
+stdlib.h
+-
+string.h
+-
+limits.h
+-
+math.h
+-
+stdio.h
+-
+assert.h
+-
+stdint.h
+-
+emmintrin.h
+-
+intrin.h
+-
+arm_neon.h
+-
+
+/home/visar/Documents/NTNU/Courses/Graphics Programming/Exercise/Camera/external/stb/stb_image_impl.cpp
+stb_image.h
+/home/visar/Documents/NTNU/Courses/Graphics Programming/Exercise/Camera/external/stb/stb_image.h
+

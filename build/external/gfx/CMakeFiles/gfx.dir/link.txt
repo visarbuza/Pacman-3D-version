@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgfx.a  CMakeFiles/gfx.dir/src/gfx.cpp.o
+/usr/bin/ranlib libgfx.a
