@@ -11,21 +11,18 @@
 
 #include <iostream>
 
-Camera* camera;
+
 GLfloat lastX = 400, lastY = 300;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window, Camera* camera, float dt);
+void processInput(GLFWwindow* window,  float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-// camera
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 // timing
 float deltaTime = 0.0f;  // time between current frame and last frame
@@ -114,7 +111,7 @@ int main() {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-  camera = new Camera();
+
 
   int width, height, nrChannels;
   stbi_set_flip_vertically_on_load(true);
@@ -151,7 +148,7 @@ int main() {
     ourShader.use();
 
     // create transformations
-    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 view = camera.GetViewMatrix();
     ourShader.setMat4("view", view);
 
     glBindVertexArray(VAO);
@@ -168,7 +165,7 @@ int main() {
       glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 
-    processInput(window, camera, deltaTime);
+    processInput(window, deltaTime);
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
@@ -180,13 +177,13 @@ int main() {
   return 0;
 }
 
-void processInput(GLFWwindow* window, Camera* camera, GLfloat dt) {
-  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) camera->ProcessKeyboard(FORWARD, dt);
-  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) camera->ProcessKeyboard(BACKWARD, dt);
-  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) camera->ProcessKeyboard(LEFT, dt);
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) camera->ProcessKeyboard(RIGHT, dt);
+void processInput(GLFWwindow* window,  GLfloat dt) {
+  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) camera.ProcessKeyboard(FORWARD, dt);
+  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) camera.ProcessKeyboard(BACKWARD, dt);
+  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) camera.ProcessKeyboard(LEFT, dt);
+  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) camera.ProcessKeyboard(RIGHT, dt);
 }
 
-void mouse_callback(GLFWwindow* window, double xPos, double yPos) { camera->ProcessMouseMovement(xPos, yPos); }
+void mouse_callback(GLFWwindow* window, double xPos, double yPos) { camera.ProcessMouseMovement(xPos, yPos); }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height); }
