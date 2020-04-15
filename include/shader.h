@@ -2,9 +2,9 @@
 #define SHADER_H
 
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 
 #include <fstream>
+#include <glm/glm.hpp>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -21,7 +21,6 @@ constexpr auto ul_vec_spot_dir = 5;
 constexpr auto ul_f_innerCutoff = 6;
 constexpr auto ul_f_outerCutoff = 7;
 constexpr auto ul_vec_view_pos = 8;
-
 
 class Shader {
  public:
@@ -111,7 +110,7 @@ class Shader {
 
   static void setProjMat(glm::mat4 proj) { glUniformMatrix4fv(ul_mat_proj, 1, GL_FALSE, glm::value_ptr(proj)); }
 
-  static void setNormalMat(glm::mat3 normal) { glUniformMatrix4fv(ul_mat_normal, 1, GL_FALSE, glm::value_ptr(normal)); }
+  static void setNormalMat(glm::mat3 normal) { glUniformMatrix3fv(ul_mat_normal, 1, GL_FALSE, glm::value_ptr(normal)); }
 
   static void setLightUniforms(glm::vec3 lightPos, glm::vec3 lightDir, float innerCutOff, float outerCutOff) {
     glUniform3fv(ul_vec_light_pos, 1, glm::value_ptr(lightPos));
