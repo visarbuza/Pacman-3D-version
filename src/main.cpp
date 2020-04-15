@@ -70,13 +70,14 @@ int main() {
     lastFrame = currentFrame;
 
     // render
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, .3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // activate shader
     ourShader.use();
+    ourShader.setLightUniforms(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)));
 
-    model.draw(glm::vec3(0.0f, 0.f, 0.0f), glfwGetTime() * 100, camera.GetViewMatrix());
+    model.draw(glm::vec3(0.0f, 0.f, 0.0f), 100, camera.GetViewMatrix());
 
     processInput(window, deltaTime);
     glfwSwapBuffers(window);

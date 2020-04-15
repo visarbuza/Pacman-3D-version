@@ -16,8 +16,8 @@ layout(location = 2) out vec3 fragPos;
 
 void main()
 {
-  normal = a_normal;
   fragPos = vec3(model * vec4(a_pos, 1.0));
   vs_texcoords = a_texcoords;
 	gl_Position = projection * view * model * vec4(a_pos, 1.0f);
+  normal = (model* vec4(a_normal, 1.0)).xyz;
 }

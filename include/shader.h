@@ -9,11 +9,19 @@
 #include <sstream>
 #include <string>
 
-/** Constants for uniform locations */
+/** Constants for uniform locations in vertex shader */
 constexpr auto ul_mat_model = 0;
 constexpr auto ul_mat_view = 1;
 constexpr auto ul_mat_proj = 2;
 constexpr auto ul_mat_normal = 3;
+
+/** Constants for uniform locations in fragment shader */
+constexpr auto ul_vec_light_pos = 4;
+constexpr auto ul_vec_spot_dir = 5;
+constexpr auto ul_f_innerCutoff = 6;
+constexpr auto ul_f_outerCutoff = 7;
+constexpr auto ul_vec_view_pos = 8;
+
 
 class Shader {
  public:
@@ -104,6 +112,14 @@ class Shader {
   static void setProjMat(glm::mat4 proj) { glUniformMatrix4fv(ul_mat_proj, 1, GL_FALSE, glm::value_ptr(proj)); }
 
   static void setNormalMat(glm::mat3 normal) { glUniformMatrix4fv(ul_mat_normal, 1, GL_FALSE, glm::value_ptr(normal)); }
+
+  static void setLightUniforms(glm::vec3 lightPos, glm::vec3 lightDir, float innerCutOff, float outerCutOff) {
+    glUniform3fv(ul_vec_light_pos, 1, glm::value_ptr(lightPos));
+    glUniform3fv(ul_vec_spot_dir, 1, glm::value_ptr(lightDir));
+    glUniform3fv(ul_vec_view_pos, 1, glm::value_ptr(lightPos));
+    glUniform1f(ul_f_innerCutoff, innerCutOff);
+    glUniform1f(ul_f_outerCutoff, outerCutOff);
+  }
 
  private:
   // utility function for checking shader compilation/linking errors.
