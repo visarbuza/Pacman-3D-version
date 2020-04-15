@@ -58,8 +58,17 @@ int main() {
   // build and compile our shader zprogram
   Shader ourShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
 
-  auto model = Model();
-  model.load("resources/models/axe.obj", "resources/models/axe_color.png");
+  auto pinky = Model();
+  pinky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png");
+
+  auto inky = Model();
+  inky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png");
+
+  auto clyde = Model();
+  clyde.load("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png");
+
+  auto blinky = Model();
+  blinky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png");
 
   ourShader.use();
 
@@ -70,14 +79,17 @@ int main() {
     lastFrame = currentFrame;
 
     // render
-    glClearColor(0.0f, 0.0f, .3f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // activate shader
     ourShader.use();
     ourShader.setLightUniforms(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)));
 
-    model.draw(glm::vec3(0.0f, 0.f, 0.0f), 100, camera.GetViewMatrix());
+    pinky.draw(glm::vec3(0.0f, 0.f, 0.0f), -90, camera.GetViewMatrix());
+    inky.draw(glm::vec3(1.0f, 0.f, 0.0f), -90, camera.GetViewMatrix());
+    clyde.draw(glm::vec3(0.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
+    blinky.draw(glm::vec3(1.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
 
     processInput(window, deltaTime);
     glfwSwapBuffers(window);

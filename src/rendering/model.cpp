@@ -129,7 +129,7 @@ void Model::draw(glm::vec3 position, float rotation, glm::mat4 lookAt) {
   model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
   auto view = lookAt;
   auto proj = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
-  auto normal_matrix = glm::mat3(glm::inverse(glm::transpose(view * model)));
+  auto normal_matrix = glm::mat3(view * model);
 
   Shader::setModelMat(model);
   Shader::setViewMat(view);
