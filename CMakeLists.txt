@@ -15,7 +15,8 @@ target_sources(
     ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
     ${CMAKE_CURRENT_LIST_DIR}/include/model.h
     ${CMAKE_CURRENT_LIST_DIR}/src/rendering/model.cpp
-      ${CMAKE_CURRENT_LIST_DIR}/include/texture.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/texture.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/util.h
     ${CMAKE_CURRENT_LIST_DIR}/src/rendering/texture.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
 )
