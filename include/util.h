@@ -4,6 +4,10 @@
 
 #include <gfx.h>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 GLFWwindow* initialize_glfw_and_gl(int width, int height)
 { // Initialise GLFW
     if (!glfwInit())
@@ -39,5 +43,33 @@ GLFWwindow* initialize_glfw_and_gl(int width, int height)
 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSwapInterval(1);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 430 core");
+
     return window;
+}
+
+void draw_gui() {
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+  ImGui::Begin("Dev Menu");
+  if (ImGui::Button("Test")) {
+  }
+  if (ImGui::Button("Buttons"))
+  {
+  }
+  if (ImGui::Button("Not Implemented"))
+  {
+  }
+  ImGui::End();
+
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

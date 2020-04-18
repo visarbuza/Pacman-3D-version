@@ -14,6 +14,7 @@
 #include <iostream>
 
 GLfloat lastX = 400, lastY = 300;
+bool devMode = false;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window, float dt);
@@ -29,7 +30,10 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float deltaTime = 0.0f;  // time between current frame and last frame
 float lastFrame = 0.0f;
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc > 1 && (std::string)argv[1] == "dev") {
+    devMode = true;
+  }
   // glfw: initialize and configure
   auto window = initialize_glfw_and_gl(SCR_WIDTH, SCR_HEIGHT);
 
@@ -83,11 +87,18 @@ int main() {
     clyde.draw(glm::vec3(0.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
     blinky.draw(glm::vec3(1.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
 
+    if (devMode) {
+      draw_gui();
+    }
+
     processInput(window, deltaTime);
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
 
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
   glfwDestroyWindow(window);
   glfwTerminate();
   return 0;

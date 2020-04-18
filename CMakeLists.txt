@@ -19,6 +19,18 @@ target_sources(
     ${CMAKE_CURRENT_LIST_DIR}/include/util.h
     ${CMAKE_CURRENT_LIST_DIR}/src/rendering/texture.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imconfig.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_demo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_draw.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_impl_glfw.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_impl_glfw.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_impl_opengl3.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_impl_opengl3.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_internal.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/imgui/imgui_widgets.cpp
 )
 
 # Set include directories
