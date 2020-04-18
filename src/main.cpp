@@ -67,7 +67,16 @@ int main() {
 
     // activate shader
     ourShader.use();
-    ourShader.setLightUniforms(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)));
+    ourShader.setVec3("spotLight.position", camera.Position);
+    ourShader.setVec3("spotLight.direction", camera.Front);
+    ourShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+    ourShader.setVec3("spotLight.diffuse", 0.5f, 0.5f, 0.5f);
+    ourShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+    ourShader.setFloat("spotLight.constant", 1.0f);
+    ourShader.setFloat("spotLight.linear", 0.09);
+    ourShader.setFloat("spotLight.quadratic", 0.032);
+    ourShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(5.0f)));
+    ourShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(7.0f)));
 
     pinky.draw(glm::vec3(0.0f, 0.f, 0.0f), -90, camera.GetViewMatrix());
     inky.draw(glm::vec3(1.0f, 0.f, 0.0f), -90, camera.GetViewMatrix());
