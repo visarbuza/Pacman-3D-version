@@ -10,19 +10,18 @@
 #include <camera.h>
 #include <model.h>
 #include <shader.h>
+#include <config.h>
 
 #include <iostream>
 
 GLfloat lastX = 400, lastY = 300;
-bool devMode = false;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window, float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
@@ -32,10 +31,11 @@ float lastFrame = 0.0f;
 
 int main(int argc, char *argv[]) {
   if (argc > 1 && (std::string)argv[1] == "dev") {
-    devMode = true;
+    Config::devMode = true;
   }
+
   // glfw: initialize and configure
-  auto window = initialize_glfw_and_gl(SCR_WIDTH, SCR_HEIGHT);
+  auto window = initialize_glfw_and_gl(Config::SCR_WIDTH, Config::SCR_HEIGHT);
 
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
     clyde.draw(glm::vec3(0.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
     blinky.draw(glm::vec3(1.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
 
-    if (devMode) {
+    if (Config::devMode) {
       draw_gui();
     }
 

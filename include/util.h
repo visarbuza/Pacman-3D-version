@@ -7,6 +7,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
+#include <config.h>
 
 GLFWwindow* initialize_glfw_and_gl(int width, int height)
 { // Initialise GLFW
@@ -60,7 +61,8 @@ void draw_gui() {
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
   ImGui::Begin("Dev Menu");
-  if (ImGui::Button("Test")) {
+  if (ImGui::Button("Enable/Disable Flight")) {
+    Config::flightEnabled = !Config::flightEnabled;
   }
   if (ImGui::Button("Buttons"))
   {
