@@ -22,8 +22,6 @@ void processInput(GLFWwindow* window, float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
 // settings
-
-
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 // timing
@@ -45,7 +43,7 @@ int main(int argc, char *argv[]) {
   // build and compile our shader zprogram
   Shader mainShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
 
-  auto game = Game();
+  Game game;
   game.init();
 
   mainShader.use();
@@ -62,20 +60,11 @@ int main(int argc, char *argv[]) {
 
     // activate shader
     mainShader.use();
-    mainShader.setVec3("spotLight.position", camera.Position);
-    mainShader.setVec3("spotLight.direction", camera.Front);
-    mainShader.setVec3("spotLight.ambient", 0.1f, 0.1f, 0.1f);
-    mainShader.setVec3("spotLight.diffuse", 0.8f, 0.8f, 0.8f);
-    mainShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-    mainShader.setFloat("spotLight.constant", 1.0f);
-    mainShader.setFloat("spotLight.linear", 0.09);
-    mainShader.setFloat("spotLight.quadratic", 0.032);
-    mainShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-    mainShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+    mainShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.0f), glm::vec3(0.08f), glm::vec3(0.01f));
+    mainShader.setSpotLight(camera.Position, camera.Front);
 
     auto view = camera.GetViewMatrix();
     auto projection = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
-
     mainShader.setMat4("view", view);
     mainShader.setMat4("projection", projection);
 

@@ -11,10 +11,9 @@ class Game {
     void update();
     void render(Shader shader);
   private:
-    std::vector<Model> characters{};
     Model inky;
-    Model blinky;
     Model pinky;
+    Model blinky;
     Model clyde;
 };
 

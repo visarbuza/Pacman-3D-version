@@ -155,6 +155,26 @@ class Shader {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
   }
 
+  void setDirLight(glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) {
+    setVec3("dirLight.direction", direction);
+    setVec3("dirLight.ambient", ambient);
+    setVec3("dirLight.diffuse", diffuse);
+    setVec3("dirLight.specular", specular);
+  }
+
+  void setSpotLight(glm::vec3 position, glm::vec3 direction) {
+    setVec3("spotLight.position", position);
+    setVec3("spotLight.direction", direction);
+    setVec3("spotLight.ambient", 0.1f, 0.1f, 0.1f);
+    setVec3("spotLight.diffuse", 0.8f, 0.8f, 0.8f);
+    setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+    setFloat("spotLight.constant", 1.0f);
+    setFloat("spotLight.linear", 0.09);
+    setFloat("spotLight.quadratic", 0.032);
+    setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+    setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+  }
+
  private:
   // utility function for checking shader compilation/linking errors.
   // ------------------------------------------------------------------------
