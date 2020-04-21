@@ -11,9 +11,11 @@ add_executable(${PROJECT_NAME})
 target_sources(
     ${PROJECT_NAME}
     PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/include/shader.h
-    ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
-    ${CMAKE_CURRENT_LIST_DIR}/include/model.h
+    # ${CMAKE_CURRENT_LIST_DIR}/include/shader.h
+    # ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
+    # ${CMAKE_CURRENT_LIST_DIR}/include/model.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/game.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/game.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/rendering/model.cpp
     ${CMAKE_CURRENT_LIST_DIR}/include/texture.h
     ${CMAKE_CURRENT_LIST_DIR}/include/util.h

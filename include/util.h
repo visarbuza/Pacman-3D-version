@@ -36,6 +36,7 @@ GLFWwindow* initialize_glfw_and_gl(int width, int height)
     glfwMakeContextCurrent(window);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+
     // Initialize Glad
     if (!gladLoadGL())
     {
@@ -45,6 +46,8 @@ GLFWwindow* initialize_glfw_and_gl(int width, int height)
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSwapInterval(1);
 
+    glEnable(GL_DEPTH_TEST);
+    
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;

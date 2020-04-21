@@ -104,13 +104,13 @@ class Shader {
   void use() { glUseProgram(ID); }
 
   // utility uniform functions
-  static void setModelMat(glm::mat4 model) { glUniformMatrix4fv(ul_mat_model, 1, GL_FALSE, glm::value_ptr(model)); }
+  // static void setModelMat(glm::mat4 model) { glUniformMatrix4fv(ul_mat_model, 1, GL_FALSE, glm::value_ptr(model)); }
 
-  static void setViewMat(glm::mat4 view) { glUniformMatrix4fv(ul_mat_view, 1, GL_FALSE, glm::value_ptr(view)); }
+  // static void setViewMat(glm::mat4 view) { glUniformMatrix4fv(ul_mat_view, 1, GL_FALSE, glm::value_ptr(view)); }
 
-  static void setProjMat(glm::mat4 proj) { glUniformMatrix4fv(ul_mat_proj, 1, GL_FALSE, glm::value_ptr(proj)); }
+  // static void setProjMat(glm::mat4 proj) { glUniformMatrix4fv(ul_mat_proj, 1, GL_FALSE, glm::value_ptr(proj)); }
 
-  static void setNormalMat(glm::mat3 normal) { glUniformMatrix3fv(ul_mat_normal, 1, GL_FALSE, glm::value_ptr(normal)); }
+  // static void setNormalMat(glm::mat3 normal) { glUniformMatrix3fv(ul_mat_normal, 1, GL_FALSE, glm::value_ptr(normal)); }
 
   void setBool(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);

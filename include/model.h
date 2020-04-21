@@ -1,6 +1,7 @@
 #pragma once
 
 #include "texture.h"
+#include "shader.h"
 
 #include <cstdint>
 #include <string>
@@ -46,5 +47,5 @@ class Model {
    */
   void load(const std::string& filepath_obj, const std::string& diffuse_path);
 
-  void draw(glm::vec3 position, float rotation, glm::mat4 lookAt);
+  void draw(glm::vec3 position, float rotation, Shader shader);
 };

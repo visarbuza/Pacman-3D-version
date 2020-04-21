@@ -11,6 +11,7 @@
 #include <model.h>
 #include <shader.h>
 #include <config.h>
+#include <game.h>
 
 #include <iostream>
 
@@ -40,24 +41,14 @@ int main(int argc, char *argv[]) {
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-  glEnable(GL_DEPTH_TEST);
 
   // build and compile our shader zprogram
-  Shader ourShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
+  Shader mainShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
 
-  auto pinky = Model();
-  pinky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png");
+  auto game = Game();
+  game.init();
 
-  auto inky = Model();
-  inky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png");
-
-  auto clyde = Model();
-  clyde.load("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png");
-
-  auto blinky = Model();
-  blinky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png");
-
-  ourShader.use();
+  mainShader.use();
 
   // render loop
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window)) {
@@ -66,26 +57,30 @@ int main(int argc, char *argv[]) {
     lastFrame = currentFrame;
 
     // render
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // activate shader
-    ourShader.use();
-    ourShader.setVec3("spotLight.position", camera.Position);
-    ourShader.setVec3("spotLight.direction", camera.Front);
-    ourShader.setVec3("spotLight.ambient", 0.1f, 0.1f, 0.1f);
-    ourShader.setVec3("spotLight.diffuse", 0.8f, 0.8f, 0.8f);
-    ourShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-    ourShader.setFloat("spotLight.constant", 1.0f);
-    ourShader.setFloat("spotLight.linear", 0.09);
-    ourShader.setFloat("spotLight.quadratic", 0.032);
-    ourShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-    ourShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+    mainShader.use();
+    mainShader.setVec3("spotLight.position", camera.Position);
+    mainShader.setVec3("spotLight.direction", camera.Front);
+    mainShader.setVec3("spotLight.ambient", 0.1f, 0.1f, 0.1f);
+    mainShader.setVec3("spotLight.diffuse", 0.8f, 0.8f, 0.8f);
+    mainShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+    mainShader.setFloat("spotLight.constant", 1.0f);
+    mainShader.setFloat("spotLight.linear", 0.09);
+    mainShader.setFloat("spotLight.quadratic", 0.032);
+    mainShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+    mainShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 
-    pinky.draw(glm::vec3(0.0f, 0.f, 0.0f), -90, camera.GetViewMatrix());
-    inky.draw(glm::vec3(1.0f, 0.f, 0.0f), -90, camera.GetViewMatrix());
-    clyde.draw(glm::vec3(0.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
-    blinky.draw(glm::vec3(1.0f, 0.f, 1.0f), -90, camera.GetViewMatrix());
+    auto view = camera.GetViewMatrix();
+    auto projection = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
+
+    mainShader.setMat4("view", view);
+    mainShader.setMat4("projection", projection);
+
+
+    game.render(mainShader);
 
     if (Config::devMode) {
       draw_gui();

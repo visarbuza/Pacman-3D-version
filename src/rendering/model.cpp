@@ -21,6 +21,7 @@ Model::~Model() noexcept
   glDeleteBuffers(1, &m_vbo);
   glDeleteBuffers(1, &m_ebo);
   glDeleteVertexArrays(1, &m_vao);
+  std::cout << "Model deleted" << std::endl;
 }
 
 Model::Model(Model &&other)
@@ -132,19 +133,15 @@ void Model::load(const std::string &filepath_obj, const std::string &diffuse_pat
   GFX_INFO("Loaded model %s (%u vertices).", filepath_obj.c_str(), out_vertices.size());
 }
 
-void Model::draw(glm::vec3 position, float rotation, glm::mat4 lookAt)
+void Model::draw(glm::vec3 position, float rotation, Shader shader)
 {
   auto model = glm::translate(glm::mat4(1.f), position);
   model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
   model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-  auto view = lookAt;
-  auto proj = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
   auto normal_matrix = glm::mat3(model);
 
-  Shader::setModelMat(model);
-  Shader::setViewMat(view);
-  Shader::setProjMat(proj);
-  Shader::setNormalMat(normal_matrix);
+  shader.setMat4("model", model);
+  shader.setMat3("normal_matrix", normal_matrix);
 
   glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
