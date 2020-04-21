@@ -1,7 +1,8 @@
 #include "game.h"
 
 void Game::init() {
-  
+  level.load();
+
   for (int i = 0; i < 4; i++) {
     characters.push_back(Model());
   }
@@ -22,11 +23,13 @@ void Game::update() {
 
 }
 
-void Game::render(Shader shader) {
+void Game::render(Shader& shader) {
   shader.use();
 
   auto i = 0;
   for (auto &character : characters) {
-    character.draw(glm::vec3(i++, 0.f, 0.0f), -90, shader);
+    character.draw(glm::vec3(i++, 0.0f, 0.0f), 0.2, -90, shader);
   }
+
+  level.draw(shader);
 }

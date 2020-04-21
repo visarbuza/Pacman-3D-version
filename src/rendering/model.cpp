@@ -132,10 +132,10 @@ void Model::load(const std::string &filepath_obj, const std::string &diffuse_pat
   GFX_INFO("Loaded model %s (%u vertices).", filepath_obj.c_str(), out_vertices.size());
 }
 
-void Model::draw(glm::vec3 position, float rotation, Shader shader)
+void Model::draw(glm::vec3 position, float scale, float rotation, Shader shader)
 {
   auto model = glm::translate(glm::mat4(1.f), position);
-  model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+  model = glm::scale(model, glm::vec3(scale));
   model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
   auto normal_matrix = glm::mat3(model);
 
@@ -148,4 +148,5 @@ void Model::draw(glm::vec3 position, float rotation, Shader shader)
 
   m_texture.bind(tb_diffuse);
   glDrawElements(GL_TRIANGLES, m_index_count, GL_UNSIGNED_INT, nullptr);
+  glBindVertexArray(0);
 }

@@ -1,6 +1,5 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <stb_image.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,7 +20,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window, float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
-// settings
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 // timing
@@ -35,18 +33,18 @@ int main(int argc, char *argv[]) {
 
   // glfw: initialize and configure
   auto window = initialize_glfw_and_gl(Config::SCR_WIDTH, Config::SCR_HEIGHT);
-
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
   // build and compile our shader zprogram
   Shader mainShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
+  mainShader.use();
 
   Game game;
   game.init();
 
-  mainShader.use();
+
 
   // render loop
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window)) {
@@ -58,7 +56,6 @@ int main(int argc, char *argv[]) {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // activate shader
     mainShader.use();
     mainShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.0f), glm::vec3(0.08f), glm::vec3(0.01f));
     mainShader.setSpotLight(camera.Position, camera.Front);
@@ -68,7 +65,7 @@ int main(int argc, char *argv[]) {
     mainShader.setMat4("view", view);
     mainShader.setMat4("projection", projection);
 
-
+  
     game.render(mainShader);
 
     if (Config::devMode) {
@@ -96,5 +93,4 @@ void processInput(GLFWwindow* window, GLfloat dt) {
 }
 
 void mouse_callback(GLFWwindow* window, double xPos, double yPos) { camera.ProcessMouseMovement(xPos, yPos); }
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height); }

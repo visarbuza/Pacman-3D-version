@@ -14,6 +14,8 @@ target_sources(
     # ${CMAKE_CURRENT_LIST_DIR}/include/shader.h
     # ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
     # ${CMAKE_CURRENT_LIST_DIR}/include/model.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/level.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/level.cpp
     ${CMAKE_CURRENT_LIST_DIR}/include/game.h
     ${CMAKE_CURRENT_LIST_DIR}/src/game.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/rendering/model.cpp
