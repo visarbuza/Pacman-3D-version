@@ -44,7 +44,7 @@ class Camera {
   // Constructor with vectors
   Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW,
          float pitch = PITCH)
-      : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY) {
+      : Front(glm::vec3(-1.0f, 0.0f, 0.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY) {
     Position = position;
     WorldUp = up;
     Yaw = yaw;
@@ -54,7 +54,7 @@ class Camera {
 
   // Constructor with scalar values
   Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-      : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY) {
+      : Front(glm::vec3(-1.0f, 0.0f, 0.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY) {
     Position = glm::vec3(posX, posY, posZ);
     WorldUp = glm::vec3(upX, upY, upZ);
     Yaw = yaw;
@@ -74,9 +74,9 @@ class Camera {
     if (direction == LEFT) Position -= Right * velocity;
     if (direction == RIGHT) Position += Right * velocity;
 
-    // if (!Config::flightEnabled) {
-    //   Position.y = 0.0f;  
-    // }
+    if (!Config::flightEnabled) {
+      Position.y = 0.0f;  
+    }
   }
 
   // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.

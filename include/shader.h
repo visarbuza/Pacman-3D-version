@@ -172,7 +172,7 @@ class Shader {
     setFloat("spotLight.linear", 0.09);
     setFloat("spotLight.quadratic", 0.032);
     setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-    setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+    setFloat("spotLight.outerCutOff", glm::cos(glm::radians(20.0f)));
   }
 
  private:

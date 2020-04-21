@@ -20,7 +20,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window, float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(13.0f, 0.0f, -1.0f));
 
 // timing
 float deltaTime = 0.0f;  // time between current frame and last frame
