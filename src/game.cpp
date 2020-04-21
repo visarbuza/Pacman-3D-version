@@ -1,11 +1,21 @@
 #include "game.h"
 
 void Game::init() {
-  pinky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png");  
-  inky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png");
-  blinky.load("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png");
-  clyde.load("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png");
   
+  for (int i = 0; i < 4; i++) {
+    characters.push_back(Model());
+  }
+  
+  auto i = 0;
+  for (auto &character : characters) {
+    switch (i) {
+      case 0: character.load("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png");  break;
+      case 1: character.load("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png");  break;
+      case 2: character.load("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png");  break;
+      case 3: character.load("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png");  break;
+    }
+    i++;
+  }
 }
 
 void Game::update() {
@@ -15,9 +25,8 @@ void Game::update() {
 void Game::render(Shader shader) {
   shader.use();
 
-  
-  pinky.draw(glm::vec3(0.0f, 0.f, 0.0f), -90, shader);
-  inky.draw(glm::vec3(1.0f, 0.f, 0.0f), -90, shader);
-  blinky.draw(glm::vec3(1.0f, 0.f, 1.0f), -90, shader);
-  clyde.draw(glm::vec3(0.0f, 0.f, 1.0f), -90, shader);
+  auto i = 0;
+  for (auto &character : characters) {
+    character.draw(glm::vec3(i++, 0.f, 0.0f), -90, shader);
+  }
 }

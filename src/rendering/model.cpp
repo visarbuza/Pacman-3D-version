@@ -21,7 +21,6 @@ Model::~Model() noexcept
   glDeleteBuffers(1, &m_vbo);
   glDeleteBuffers(1, &m_ebo);
   glDeleteVertexArrays(1, &m_vao);
-  std::cout << "Model deleted" << std::endl;
 }
 
 Model::Model(Model &&other)
