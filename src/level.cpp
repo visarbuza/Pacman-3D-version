@@ -2,7 +2,7 @@
 
 void Level::load() {
   readLevel("resources/levels/level0");
-  cube.load("resources/models/cube.obj", "resources/textures/wall.png");
+  cube.load("resources/models/cube.obj", "resources/textures/wall5.jpg");
 }
 
 void Level::draw(Shader shader) {
