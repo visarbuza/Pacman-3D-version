@@ -19,8 +19,12 @@ void Game::init() {
   }
 }
 
-void Game::update() {
+void Game::update(float dt) {
 
+}
+
+void Game::processInput(float dt) {
+  
 }
 
 void Game::render(Shader& shader) {

@@ -1,19 +1,16 @@
+#pragma once
 #ifndef CAMERA_H
 #define CAMERA_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <config.h>
-
 #include <vector>
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific
 // input methods
 enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT };
 
-// Default mouse position values
-GLfloat mouseLastX = 400, mouseLastY = 300;
 
 // Default camera values
 const float YAW = -90.0f;
@@ -74,9 +71,7 @@ class Camera {
     if (direction == LEFT) Position -= Right * velocity;
     if (direction == RIGHT) Position += Right * velocity;
 
-    if (!Config::flightEnabled) {
-      Position.y = 0.0f;  
-    }
+    // Position.y = 0.0f;      
   }
 
   // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
@@ -104,6 +99,9 @@ class Camera {
   }
 
  private:
+  // Default mouse position values
+  GLfloat mouseLastX = 400, mouseLastY = 300;
+
   // Calculates the front vector from the Camera's (updated) Euler Angles
   void updateCameraVectors() {
     // Calculate the new Front vector
