@@ -175,6 +175,40 @@ class Shader {
     setFloat("spotLight.outerCutOff", glm::cos(glm::radians(20.0f)));
   }
 
+  void setPointLight() {
+    setVec3("pointLights[0].position", glm::vec3(-1.0, 0.0f, 1.0f));
+    setVec3("pointLights[0].ambient", 0.05f, 0.01f, 0.02f);
+    setVec3("pointLights[0].diffuse", 0.8f, 0.2f, 0.3f);
+    setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+    setFloat("pointLights[0].constant", 1.0f);
+    setFloat("pointLights[0].linear", 0.7);
+    setFloat("pointLights[0].quadratic", 1.8);
+    // point light 2
+    setVec3("pointLights[1].position", glm::vec3(-1.0, 0.0f, 0.0f));
+    setVec3("pointLights[1].ambient", 0.05f, 0.0f, 0.0f);
+    setVec3("pointLights[1].diffuse", 0.8f, 0.0f, 0.0f);
+    setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+    setFloat("pointLights[1].constant", 1.0f);
+    setFloat("pointLights[1].linear", 0.7);
+    setFloat("pointLights[1].quadratic", 1.8);
+    // point light 3
+    setVec3("pointLights[2].position", glm::vec3(-1.0, 0.0f, -1.0f));
+    setVec3("pointLights[2].ambient", 0.0f, 0.01f, 0.05f);
+    setVec3("pointLights[2].diffuse", 0.0f, 0.2f, 0.8f);
+    setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
+    setFloat("pointLights[2].constant", 1.0f);
+    setFloat("pointLights[2].linear", 0.7);
+    setFloat("pointLights[2].quadratic", 1.8);
+    // point light 4
+    setVec3("pointLights[3].position", glm::vec3(-1.0, 0.0f, -2.0f));
+    setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.0f);
+    setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.0f);
+    setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
+    setFloat("pointLights[3].constant", 1.0f);
+    setFloat("pointLights[3].linear", 0.7);
+    setFloat("pointLights[3].quadratic", 1.8);
+  }
+
  private:
   // utility function for checking shader compilation/linking errors.
   // ------------------------------------------------------------------------

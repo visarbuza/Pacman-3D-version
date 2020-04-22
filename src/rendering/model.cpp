@@ -148,5 +148,8 @@ void Model::draw(glm::vec3 position, float scale, float rotation, Shader shader)
 
   m_texture.bind(tb_diffuse);
   glDrawElements(GL_TRIANGLES, m_index_count, GL_UNSIGNED_INT, nullptr);
+  
+  // set everything to default
   glBindVertexArray(0);
+  glActiveTexture(GL_TEXTURE0);
 }
