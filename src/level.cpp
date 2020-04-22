@@ -3,6 +3,7 @@
 void Level::load() {
   readLevel("resources/levels/level0");
   cube.load("resources/models/cube.obj", "resources/textures/wall.png");
+  foodModel.load("resources/models/cube.obj", "resources/textures/food.jpg");
 }
 
 void Level::draw(Shader shader) {
@@ -11,6 +12,12 @@ void Level::draw(Shader shader) {
     if (item.second) {
       cube.draw(glm::vec3(item.first.first, 0.0f, item.first.second), 0.5, 0, shader);
       cube.draw(glm::vec3(item.first.first, 1.0f, item.first.second), 0.5, 0, shader);
+    }
+  }
+
+  for (auto &food : foodGrid) {
+    if (food.isVisible) {
+      food.draw(&foodModel, shader);
     }
   }
 }
@@ -37,6 +44,11 @@ void Level::readLevel(const std::string& path){
       while (linestream >> key) {
         std::pair<int, int> pair(x, z);
         grid.emplace(pair, (bool)std::stoi(key));
+
+        if (std::stoi(key) == 0) {
+          foodGrid.push_back(Food(glm::vec3(x, -0.35, z), 0.04, 0));
+        }
+
         z++;
       }
       z = -14;

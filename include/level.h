@@ -11,6 +11,7 @@
 #include <map>
 
 #include "model.h"
+#include "food.h"
 
 
 class Level {
@@ -19,7 +20,9 @@ class Level {
     void draw(Shader shader);
   private:
     std::map<std::pair<int, int> , bool> grid;
+    std::vector<Food> foodGrid;
     Model cube;
+    Model foodModel;
     void drawFloor(Shader shader);
     void readLevel(const std::string &path);
 
