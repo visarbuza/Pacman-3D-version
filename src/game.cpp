@@ -28,7 +28,8 @@ void Game::render(Shader& shader) {
 
   auto i = 0;
   for (auto &character : characters) {
-    character.draw(glm::vec3(10, 0.0f, -1.0f), 0.3, 0, shader);
+    character.draw(glm::vec3(-1.0, 0.0f, 1 - i), 0.2, -180, shader);
+    i++;
   }
 
   level.draw(shader);

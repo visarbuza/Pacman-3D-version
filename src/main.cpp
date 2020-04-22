@@ -20,7 +20,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window, float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
-Camera camera(glm::vec3(13.0f, 0.0f, -1.0f));
+Camera camera(glm::vec3(-1.0f, 0.0f, 13.0f));
 
 // timing
 float deltaTime = 0.0f;  // time between current frame and last frame
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     mainShader.setSpotLight(camera.Position, camera.Front);
 
     auto view = camera.GetViewMatrix();
-    auto projection = glm::perspective(glm::radians(45.f), 16.f / 9.f, 0.01f, 650.f);
+    auto projection = glm::perspective(glm::radians(35.f), 16.f / 9.f, 0.01f, 650.f);
     mainShader.setMat4("view", view);
     mainShader.setMat4("projection", projection);
 

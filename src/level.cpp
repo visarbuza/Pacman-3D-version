@@ -2,7 +2,7 @@
 
 void Level::load() {
   readLevel("resources/levels/level0");
-  cube.load("resources/models/cube.obj", "resources/textures/wall5.jpg");
+  cube.load("resources/models/cube.obj", "resources/textures/wall.png");
 }
 
 void Level::draw(Shader shader) {
@@ -17,9 +17,9 @@ void Level::draw(Shader shader) {
 
 void Level::drawFloor(Shader shader) {
   shader.use();
-  for (int i = 0; i < 31; i++) {
-    for (int j = 0; j < 28; j++) {
-      cube.draw(glm::vec3(j - 14, -1.0, i - 15), 0.5, 0, shader);
+  for (int x = 0; x < 31; x++) {
+    for (int z= 0; z < 28; z++) {
+      cube.draw(glm::vec3(x - 15, -1.0, z - 14), 0.5, 0, shader);
     }
   }
 }
@@ -29,18 +29,18 @@ void Level::readLevel(const std::string& path){
   std::ifstream filestream(path);
   if (filestream.is_open()) {
     std::getline(filestream, line);
-    int y = -15;
-    int x = -14;
+    int x = -15;
+    int z = -14;
     while (std::getline(filestream, line)) {
       std::istringstream linestream(line);
       std::string key, value;
       while (linestream >> key) {
-        std::pair<int, int> pair(x, y);
+        std::pair<int, int> pair(x, z);
         grid.emplace(pair, (bool)std::stoi(key));
-        x++;
+        z++;
       }
-      x = -14;
-      y++;
+      z = -14;
+      x++;
       std::cout << std::endl;
     }
   }
