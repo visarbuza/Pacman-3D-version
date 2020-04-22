@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     mainShader.setSpotLight(camera.Position, camera.Front);
 
     auto view = camera.GetViewMatrix();
-    auto projection = glm::perspective(glm::radians(35.f), 16.f / 9.f, 0.01f, 650.f);
+    auto projection = glm::perspective(glm::radians(50.f), 16.f / 9.f, 0.01f, 650.f);
     mainShader.setMat4("view", view);
     mainShader.setMat4("projection", projection);
 
