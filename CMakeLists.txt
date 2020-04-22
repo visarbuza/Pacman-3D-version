@@ -16,6 +16,8 @@ target_sources(
     # ${CMAKE_CURRENT_LIST_DIR}/include/model.h
     ${CMAKE_CURRENT_LIST_DIR}/include/level.h
     ${CMAKE_CURRENT_LIST_DIR}/src/level.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/ghost.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/ghost.cpp
     ${CMAKE_CURRENT_LIST_DIR}/include/food.h
     ${CMAKE_CURRENT_LIST_DIR}/src/food.cpp
     ${CMAKE_CURRENT_LIST_DIR}/include/game.h
