@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "route_planner.h"
 #include "model.h"
 #include "level.h"
 #include "camera.h"
