@@ -56,13 +56,30 @@ int main(int argc, char *argv[]) {
     mainShader.setMat4("view", view);
     mainShader.setMat4("projection", projection);
 
-    game.update(deltaTime);
-  
-    game.render(mainShader);
+    if (game.state == GAME_MENU) {
+      ImGui_ImplOpenGL3_NewFrame();
+      ImGui_ImplGlfw_NewFrame();
+      ImGui::NewFrame();
+      ImGui::Begin("Menu");
+      if (ImGui::Button("Play game")) {
+        game.state = GAME_ACTIVE;
+      }
+      if (ImGui::Button("Exit")) {
+				glfwSetWindowShouldClose(window, GL_TRUE);
+      }
+      ImGui::End();
 
-    if (Config::devMode) {
-      draw_gui();
+      ImGui::Render();
+      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    } else {
+      game.update(deltaTime);
+      game.render(mainShader);
+
+      if (Config::devMode) {
+        draw_gui();
+      }
     }
+
 
     processInput(window, deltaTime);
     glfwSwapBuffers(window);

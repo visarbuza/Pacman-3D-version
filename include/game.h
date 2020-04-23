@@ -12,6 +12,12 @@
 #include "camera.h"
 #include "ghost.h"
 
+enum GameState {
+    GAME_ACTIVE,
+    GAME_MENU,
+    GAME_WIN,
+    GAME_LOSS
+};
 
 class Game {
   public:
@@ -20,6 +26,7 @@ class Game {
     void processInput(float dt);
     void render(Shader& shader);
     Camera camera = Camera(glm::vec3(-1.0f, 0.0f, 13.0f));
+    GameState state;
   private:
     std::vector<Model> characters;
     std::vector<Ghost> ghosts;

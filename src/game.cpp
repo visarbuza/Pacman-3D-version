@@ -1,6 +1,7 @@
 #include "game.h"
 
 void Game::init() {
+  state = GAME_MENU;
   level.load();
 
   for (int i = 0; i < 4; i++) {
