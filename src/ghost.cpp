@@ -6,6 +6,15 @@ Ghost::Ghost(std::string modelPath, std::string texturePath, glm::vec3 position,
   model->load(modelPath, texturePath);
 }
 
+void Ghost::update(float dt) {
+  animation += dt;
+  if (animation >= 0.7) {
+    this->position = glm::vec3(this->path[0].first, 0.0f, this->path[0].second);
+    this->path.erase(path.begin());
+    animation = 0;
+  }
+}
+
 void Ghost::draw(Shader shader, int index) {
   shader.use();
   shader.setPointLight(this->position, this->color, index);

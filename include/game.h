@@ -27,6 +27,7 @@ class Game {
     void update(float dt);
     void processInput(float dt);
     void render(Shader& shader);
+    RoutePlanner route;
     Camera camera = Camera(glm::vec3(-1.0f, 0.0f, 13.0f));
     GameState state;
   private:

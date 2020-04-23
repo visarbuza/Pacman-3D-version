@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "model.h"
 
@@ -16,10 +18,14 @@ class Ghost {
     glm::vec3 front;
     glm::vec3 color;
     float velocity;
+    float animation = 0;
   public:
     Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color);
     void draw(Shader shader, int index);
+    std::vector<std::pair<int, int>> path;
     
+    void update(float dt);
+
     void setPosition(const glm::vec3 position) {
       this->position = position;
     }
