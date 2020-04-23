@@ -10,11 +10,11 @@
 #include "model.h"
 #include "level.h"
 #include "camera.h"
+#include "ghost.h"
 
 
 class Game {
   public:
-    GLboolean keys[1024];
     void init();
     void update(float dt);
     void processInput(float dt);
@@ -22,6 +22,7 @@ class Game {
     Camera camera = Camera(glm::vec3(-1.0f, 0.0f, 13.0f));
   private:
     std::vector<Model> characters;
+    std::vector<Ghost> ghosts;
     Level level;
     
 };

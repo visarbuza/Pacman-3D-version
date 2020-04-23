@@ -1,9 +1,6 @@
 #include "food.h"
 
-Food::Food(glm::vec3 position, float scale, float rotation) {
-  this->position = position;
-  this->scale = scale;
-  this->rotation = rotation;
+Food::Food(glm::vec3 position, float scale, float rotation) : position(position), scale(scale), rotation(rotation) {
   this->isVisible = true;
 }
 
