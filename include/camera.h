@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
+#include <config.h>
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific
 // input methods
@@ -71,7 +72,9 @@ class Camera {
     if (direction == LEFT) Position -= Right * velocity;
     if (direction == RIGHT) Position += Right * velocity;
 
-    // Position.y = 0.0f;      
+    if (!Config::flightEnabled) {
+      Position.y = 0.0f;      
+    }
   }
 
   // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.

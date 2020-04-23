@@ -9,7 +9,6 @@
 #include <camera.h>
 #include <model.h>
 #include <shader.h>
-#include <config.h>
 #include <game.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

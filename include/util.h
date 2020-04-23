@@ -7,7 +7,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
-#include <config.h>
+#include "config.h"
 
 GLFWwindow* initialize_glfw_and_gl(int width, int height)
 { // Initialise GLFW

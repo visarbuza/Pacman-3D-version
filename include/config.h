@@ -2,20 +2,12 @@
 #ifndef CONFIG_H
 #define CONFIG_h
 
-class Config {
-  public:
-    static bool flightEnabled;
+namespace Config {
+    static bool flightEnabled = false;
+    static bool devMode = false;
 
     static const unsigned int SCR_WIDTH = 800;
     static const unsigned int SCR_HEIGHT = 600;
-
-    static bool devMode;
-
-  private:
-    Config() {}
 };
-
-bool Config::flightEnabled = false;
-bool Config::devMode = false;
 
 #endif
