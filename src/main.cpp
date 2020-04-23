@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
   game.init();
 
   // render loop
-  while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window)) {
+  while (!glfwWindowShouldClose(window)) {
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
@@ -56,12 +56,13 @@ int main(int argc, char *argv[]) {
     mainShader.setMat4("view", view);
     mainShader.setMat4("projection", projection);
 
-    if (game.state == GAME_MENU) {
+    if (game.state == GAME_MENU || game.state == GAME_PAUSED) {
       ImGui_ImplOpenGL3_NewFrame();
       ImGui_ImplGlfw_NewFrame();
       ImGui::NewFrame();
       ImGui::Begin("Menu");
-      if (ImGui::Button("Play game")) {
+      const char* text = game.state == GAME_MENU ? "Play game" : "Resume game";
+      if (ImGui::Button(text)) {
         game.state = GAME_ACTIVE;
       }
       if (ImGui::Button("Exit")) {
@@ -80,7 +81,6 @@ int main(int argc, char *argv[]) {
       }
     }
 
-
     processInput(window, deltaTime);
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -95,6 +95,7 @@ int main(int argc, char *argv[]) {
 }
 
 void processInput(GLFWwindow* window, GLfloat dt) {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) game.state = GAME_PAUSED;
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) game.camera.ProcessKeyboard(FORWARD, dt);
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) game.camera.ProcessKeyboard(BACKWARD, dt);
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) game.camera.ProcessKeyboard(LEFT, dt);

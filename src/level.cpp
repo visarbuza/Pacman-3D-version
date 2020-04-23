@@ -27,7 +27,6 @@ void Level::update(float x, float z) {
     if (food.isVisible) {
       if (food.position.x > x - 0.2 && food.position.x < x + 0.2 && food.position.z > z - 0.2 && food.position.z < z + 0.2) {
         food.isVisible = false;
-        std::cout << "Touched food" << std::endl;
         break;
       }
     }

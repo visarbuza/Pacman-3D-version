@@ -15,6 +15,7 @@
 enum GameState {
     GAME_ACTIVE,
     GAME_MENU,
+    GAME_PAUSED,
     GAME_WIN,
     GAME_LOSS
 };
