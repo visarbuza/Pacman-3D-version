@@ -10,8 +10,8 @@ class Food {
     void collect();
     void draw(Model* model, Shader shader);
     bool isVisible;
-  private:
     glm::vec3 position;
+  private:
     float scale;
     float rotation;
 };

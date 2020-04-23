@@ -26,7 +26,9 @@ void Game::init() {
   }
 }
 
-void Game::update(float dt) {}
+void Game::update(float dt) {
+  level.update(camera.Position.x, camera.Position.z);
+}
 
 void Game::processInput(float dt) {}
 

@@ -22,6 +22,18 @@ void Level::draw(Shader shader) {
   }
 }
 
+void Level::update(float x, float z) {
+  for (auto &food : foodGrid) {
+    if (food.isVisible) {
+      if (food.position.x > x - 0.2 && food.position.x < x + 0.2 && food.position.z > z - 0.2 && food.position.z < z + 0.2) {
+        food.isVisible = false;
+        std::cout << "Touched food" << std::endl;
+        break;
+      }
+    }
+  }
+}
+
 void Level::drawFloor(Shader shader) {
   shader.use();
   for (int x = 0; x < 31; x++) {
