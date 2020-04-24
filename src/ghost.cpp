@@ -9,21 +9,15 @@ Ghost::Ghost(std::string modelPath, std::string texturePath, glm::vec3 position,
 }
 
 void Ghost::update(float dt) {
-  float velocity = speed * dt;
   if (path.size() == 0) {
     return;
   }
+
+  float velocity = speed * dt;
   if (glm::distance(position, nextPosition) <= 0.09) {
     nextPosition = glm::vec3(path[1].first, 0.0f, path[1].second);
     direction = glm::normalize(nextPosition - position);
-    glm::vec3 cross = glm::cross(front, direction);
-    float dot = glm::dot(front, direction);
-    if (cross.y < 0) {
-      rotation += glm::degrees(glm::acos(dot)) * (-1);
-    } else {
-      rotation += glm::degrees(glm::acos(dot));
-    }
-    rotation = rotation % 360;
+    rotate();
     front = direction;
     path.erase(path.begin());
   }
@@ -32,6 +26,18 @@ void Ghost::update(float dt) {
 
 void Ghost::draw(Shader shader, int index) {
   shader.use();
-  shader.setPointLight(this->position, this->color, index);
+  shader.setGhostLight(this->position, this->color, index);
   model->draw(this->position, 0.2, rotation, shader);
+}
+
+void Ghost::rotate() {
+  crossProduct = glm::cross(front, direction);
+  dotProduct = glm::dot(front, direction);
+  
+  if (crossProduct.y < 0) {
+    rotation += glm::degrees(glm::acos(dotProduct)) * (-1);
+  } else {
+    rotation += glm::degrees(glm::acos(dotProduct));
+  }
+  rotation = rotation % 360;
 }

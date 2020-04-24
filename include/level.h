@@ -24,8 +24,10 @@ class Level {
     std::vector<Food> foodGrid;
     Model cube;
     Model foodModel;
+    Model lamp;
     void drawFloor(Shader shader);
     void readLevel(const std::string &path);
+    void renderLamps(Shader shader);
 
 };
 

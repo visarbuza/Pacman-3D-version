@@ -4,6 +4,7 @@ void Level::load() {
   readLevel("resources/levels/level0");
   cube.load("resources/models/cube.obj", "resources/textures/wall.png");
   foodModel.load("resources/models/cube.obj", "resources/textures/food.jpg");
+  lamp.load("resources/models/cube.obj", "resources/textures/lamp.jpg");
 }
 
 void Level::draw(Shader shader) {
@@ -18,6 +19,36 @@ void Level::draw(Shader shader) {
   for (auto &food : foodGrid) {
     if (food.isVisible) {
       food.draw(&foodModel, shader);
+    }
+  }
+  renderLamps(shader);
+}
+
+void Level::renderLamps(Shader shader) {
+for (int i = 0; i < 4; i++) {
+    glm::vec3 position(-14.4f, 1.2f, 12.4);
+    switch (i) {
+      case 0:
+        lamp.draw(position, 0.15, 0, shader);
+        shader.setPointLights(position, glm::vec3(1.0f, 0.0f, 0.0f), i);
+        break;
+      case 1:
+        position.z = -13.4;
+        lamp.draw(position, 0.15, 0, shader);
+        shader.setPointLights(position, glm::vec3(1.0f, 0.0f, 0.0f), i);
+        break;
+      case 2:
+        position.x = 14.4;
+        position.z = -13.4;
+        lamp.draw(position, 0.15, 0, shader);
+        shader.setPointLights(position, glm::vec3(1.0f, 0.0f, 0.0f), i);
+        break;
+      case 3:
+        position.x = 14.4;
+        position.z = 12.4;
+        lamp.draw(position, 0.15, 0, shader);
+        shader.setPointLights(position, glm::vec3(1.0f, 0.0f, 0.0f), i);
+        break;
     }
   }
 }

@@ -37,6 +37,7 @@ struct SpotLight {
   vec3 specular;
 };
 
+#define NR_GHOSTS 4
 #define NR_POINT_LIGHTS 4
 
 /** Inputs */    
@@ -47,6 +48,7 @@ layout(location = 2) in vec3 fragPos;
 /** Texture sampler */
 layout(binding = 0) uniform sampler2D texture_diffuse;
 uniform DirLight dirLight;
+uniform PointLight ghostLights[NR_GHOSTS];
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform SpotLight spotLight;
 
@@ -60,8 +62,10 @@ void main()
   vec3 viewDir = normalize(-fragPos);
 
   vec3 result = CalculateDirLight(dirLight, norm, viewDir);
-  for(int i = 0; i < NR_POINT_LIGHTS; i++)
-        result += CalculatePointLight(pointLights[i], norm, fragPos, viewDir);    
+  for(int i = 0; i < NR_GHOSTS; i++){
+    result += CalculatePointLight(ghostLights[i], norm, fragPos, viewDir);    
+    result += CalculatePointLight(pointLights[i], norm, fragPos, viewDir);
+  }
   result += CalculateSpotLight(spotLight, norm, fragPos, viewDir);
 
   out_color = vec4(result, 1.0);

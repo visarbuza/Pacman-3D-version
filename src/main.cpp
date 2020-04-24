@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     mainShader.use();
-    mainShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.0f), glm::vec3(0.08f), glm::vec3(0.01f));
+    mainShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.0f), glm::vec3(0.2f), glm::vec3(0.5f));
     mainShader.setSpotLight(game.camera.Position, game.camera.Front);
 
     auto view = game.camera.GetViewMatrix();

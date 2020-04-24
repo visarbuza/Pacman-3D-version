@@ -18,14 +18,17 @@ class Ghost {
     glm::vec3 nextPosition;
     glm::vec3 direction;
     glm::vec3 front;
+    glm::vec3 crossProduct;
     glm::vec3 color;
     int rotation = 0;
     float speed = 1.5;
+    float dotProduct;
+    void rotate();
+    
   public:
+    std::vector<std::pair<int, int>> path;
     Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color);
     void draw(Shader shader, int index);
-    std::vector<std::pair<int, int>> path;
-    
     void update(float dt);
 
     void setPosition(const glm::vec3 position) {

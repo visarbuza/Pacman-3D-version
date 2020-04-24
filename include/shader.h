@@ -177,14 +177,24 @@ class Shader {
     setFloat("spotLight.outerCutOff", glm::cos(glm::radians(20.0f)));
   }
 
-  void setPointLight(glm::vec3 position, glm::vec3 color, int index) {
+  void setGhostLight(glm::vec3 position, glm::vec3 color, int index) {
+    setVec3("ghostLights[" + std::to_string(index) + "].position", position);
+    setVec3("ghostLights[" + std::to_string(index) + "].ambient", color * glm::vec3(0.1f));
+    setVec3("ghostLights[" + std::to_string(index) + "].diffuse", color);
+    setVec3("ghostLights[" + std::to_string(index) + "].specular", glm::vec3(0.8f));
+    setFloat("ghostLights[" + std::to_string(index) + "].constant", 1.0f);
+    setFloat("ghostLights[" + std::to_string(index) + "].linear", 0.7);
+    setFloat("ghostLights[" + std::to_string(index) + "].quadratic", 1.4);
+  }
+
+  void setPointLights(glm::vec3 position, glm::vec3 color, int index) {
     setVec3("pointLights[" + std::to_string(index) + "].position", position);
-    setVec3("pointLights[" + std::to_string(index) + "].ambient", color * glm::vec3(0.1f));
+    setVec3("pointLights[" + std::to_string(index) + "].ambient", color * glm::vec3(0.2f));
     setVec3("pointLights[" + std::to_string(index) + "].diffuse", color);
     setVec3("pointLights[" + std::to_string(index) + "].specular", glm::vec3(0.8f));
     setFloat("pointLights[" + std::to_string(index) + "].constant", 1.0f);
-    setFloat("pointLights[" + std::to_string(index) + "].linear", 0.7);
-    setFloat("pointLights[" + std::to_string(index) + "].quadratic", 1.4);
+    setFloat("pointLights[" + std::to_string(index) + "].linear", 0.22);
+    setFloat("pointLights[" + std::to_string(index) + "].quadratic", 0.20);
   }
 
  private:
