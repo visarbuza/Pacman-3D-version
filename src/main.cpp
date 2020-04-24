@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
   auto window = initialize_glfw_and_gl(Config::SCR_WIDTH, Config::SCR_HEIGHT);
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
   // build and compile our shader zprogram
   Shader mainShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
   mainShader.use();

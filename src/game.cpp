@@ -1,8 +1,14 @@
 #include "game.h"
+#include "text_renderer.h"
+
+TextRenderer text;
 
 void Game::init() {
   state = GAME_MENU;
   level.load();
+
+  text = TextRenderer(Config::SCR_WIDTH, Config::SCR_HEIGHT);
+  text.load("resources/fonts/ocraext.TTF", 24);
 
   for (int i = 0; i < 4; i++) {
     switch (i) {
@@ -30,10 +36,12 @@ void Game::init() {
     int end[2] = {-13, 1};
     ghost.path = route.search(level.grid, start, end);
   }
+
+  score = 0;
 }
 
 void Game::update(float dt) {
-  level.update(camera.Position.x, camera.Position.z);
+  if (level.update(camera.Position.x, camera.Position.z)) score++;
   for (auto &ghost: ghosts) {
     ghost.update(dt);
   }
@@ -49,6 +57,11 @@ void Game::render(Shader& shader) {
     ghost.draw(shader, i);
     i++;
   }
+
+  std::stringstream ss;
+  ss << this->score;
+
+  text.renderText("Score: " + ss.str(), 5.0f, 5.0f, 1.0);
 
   level.draw(shader);
 }

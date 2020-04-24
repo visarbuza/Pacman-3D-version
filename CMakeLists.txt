@@ -7,6 +7,9 @@ add_subdirectory(external)
 # Create .exe file (essentially)
 add_executable(${PROJECT_NAME})
 
+# Find freetype
+find_package(Freetype REQUIRED)
+
 # Add additional source files here
 target_sources(
     ${PROJECT_NAME}
@@ -14,6 +17,8 @@ target_sources(
     # ${CMAKE_CURRENT_LIST_DIR}/include/shader.h
     # ${CMAKE_CURRENT_LIST_DIR}/include/camera.h
     # ${CMAKE_CURRENT_LIST_DIR}/include/model.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/text_renderer.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/rendering/text_renderer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/include/level.h
     ${CMAKE_CURRENT_LIST_DIR}/src/level.cpp
     ${CMAKE_CURRENT_LIST_DIR}/include/ghost.h
@@ -50,6 +55,7 @@ target_include_directories(
     PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include
     ${CMAKE_CURRENT_LIST_DIR}/src
+    ${FREETYPE_INCLUDE_DIRS}
 )
 
 # Link with external libraries
@@ -62,6 +68,7 @@ target_link_libraries(
     glfw
     stbimage::stbimage
     tinyobj::tinyobj
+    ${FREETYPE_LIBRARIES}
 )
 
 # Enable C++ 17

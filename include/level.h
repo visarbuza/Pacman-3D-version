@@ -18,7 +18,7 @@ class Level {
   public:
     void load();
     void draw(Shader shader);
-    void update(float x, float z);
+    bool update(float x, float z);
     std::map<std::pair<int, int> , bool> grid;
   private:
     std::vector<Food> foodGrid;

@@ -2,9 +2,9 @@
 #define SHADER_H
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 #include <fstream>
-#include <glm/glm.hpp>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -27,6 +27,8 @@ class Shader {
   unsigned int ID;
   // constructor generates the shader on the fly
   // ------------------------------------------------------------------------
+  Shader() {}
+
   Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr) {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
