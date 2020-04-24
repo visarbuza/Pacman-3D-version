@@ -15,10 +15,12 @@ class Ghost {
   private:
     std::unique_ptr<Model> model;
     glm::vec3 position;
+    glm::vec3 nextPosition;
+    glm::vec3 direction;
     glm::vec3 front;
     glm::vec3 color;
-    float velocity;
-    float animation = 0;
+    int rotation = 0;
+    float speed = 1.5;
   public:
     Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color);
     void draw(Shader shader, int index);
