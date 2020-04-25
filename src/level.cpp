@@ -11,8 +11,8 @@ void Level::draw(Shader shader) {
   drawFloor(shader);
   for (auto const &item : grid) {
     if (item.second) {
-      cube.draw(glm::vec3(item.first.first, 0.0f, item.first.second), 0.5, 0, shader);
-      cube.draw(glm::vec3(item.first.first, 1.0f, item.first.second), 0.5, 0, shader);
+      cube.draw(glm::vec3(item.first.first, 0.0f, item.first.second), 1.0, 0, shader);
+      cube.draw(glm::vec3(item.first.first, 1.0f, item.first.second), 1.0, 0, shader);
     }
   }
 
@@ -70,7 +70,7 @@ void Level::drawFloor(Shader shader) {
   shader.use();
   for (int x = 0; x < 31; x++) {
     for (int z= 0; z < 28; z++) {
-      cube.draw(glm::vec3(x - 15, -1.0, z - 14), 0.5, 0, shader);
+      cube.draw(glm::vec3(x - 15, -1.0, z - 14), 1.0, 0, shader);
     }
   }
 }
@@ -90,7 +90,7 @@ void Level::readLevel(const std::string& path){
         grid.emplace(pair, (bool)std::stoi(key));
 
         if (std::stoi(key) == 0) {
-          foodGrid.push_back(Food(glm::vec3(x, -0.35, z), 0.04, 0));
+          foodGrid.push_back(Food(glm::vec3(x, -0.35, z), 0.1, 0));
         }
 
         z++;
