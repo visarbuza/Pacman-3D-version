@@ -1,9 +1,8 @@
 #include "game.h"
-#include "text_renderer.h"
-
-TextRenderer text;
 
 void Game::init() {
+  shader = Shader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
+
   state = GAME_MENU;
   level.load();
 
@@ -49,19 +48,34 @@ void Game::update(float dt) {
 
 void Game::processInput(float dt) {}
 
-void Game::render(Shader& shader) {
-  shader.use();
-
+void Game::render() {
+  shader.reset();
+  setLighting();
+  setUpTransformations();
+  
   auto i = 0;
   for (auto& ghost : ghosts) {
     ghost.draw(shader, i);
     i++;
   }
+  displayScore();
+  level.draw(shader);
+}
 
+void Game::setUpTransformations() {
+  auto projection = glm::perspective(glm::radians(50.f), 16.f / 9.f, 0.01f, 650.f);
+  shader.setMat4("view", camera.GetViewMatrix());
+  shader.setMat4("projection", projection);
+}
+
+void Game::setLighting() {
+  shader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.0f), glm::vec3(0.35f), glm::vec3(0.5f));
+  shader.setSpotLight(camera.Position, camera.Front);
+  shader.toggleFlashlight(flashlight);
+}
+
+void Game::displayScore() {
   std::stringstream ss;
   ss << this->score;
-
   text.renderText("Score: " + ss.str(), 5.0f, 5.0f, 1.0);
-
-  level.draw(shader);
 }

@@ -177,6 +177,22 @@ class Shader {
     setFloat("spotLight.outerCutOff", glm::cos(glm::radians(20.0f)));
   }
 
+  void toggleFlashlight (bool state) {
+    if (state) {
+      setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+      setFloat("spotLight.outerCutOff", glm::cos(glm::radians(20.0f)));  
+    } else {
+      setFloat("spotLight.cutOff", glm::cos(glm::radians(0.0f)));
+      setFloat("spotLight.outerCutOff", glm::cos(glm::radians(0.0f)));
+    }
+  }
+
+  void reset() {
+    this->use();
+    glClearColor(0.06f, 0.06f, 0.06f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  }
+
   void setGhostLight(glm::vec3 position, glm::vec3 color, int index) {
     setVec3("ghostLights[" + std::to_string(index) + "].position", position);
     setVec3("ghostLights[" + std::to_string(index) + "].ambient", color * glm::vec3(0.1f));

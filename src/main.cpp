@@ -16,7 +16,6 @@ void processInput(GLFWwindow* window, float dt);
 void mouse_callback(GLFWwindow* window, double xPos, double yPos);
 
 Game game;
-
 // timing
 float deltaTime = 0.0f;  // time between current frame and last frame
 float lastFrame = 0.0f;
@@ -30,9 +29,6 @@ int main(int argc, char *argv[]) {
   auto window = initialize_glfw_and_gl(Config::SCR_WIDTH, Config::SCR_HEIGHT);
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-  // build and compile our shader zprogram
-  Shader mainShader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
-  mainShader.use();
 
   game.init();
 
@@ -41,19 +37,6 @@ int main(int argc, char *argv[]) {
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-
-    // render
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    mainShader.use();
-    mainShader.setDirLight(glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.0f), glm::vec3(0.2f), glm::vec3(0.5f));
-    mainShader.setSpotLight(game.camera.Position, game.camera.Front);
-
-    auto view = game.camera.GetViewMatrix();
-    auto projection = glm::perspective(glm::radians(50.f), 16.f / 9.f, 0.01f, 650.f);
-    mainShader.setMat4("view", view);
-    mainShader.setMat4("projection", projection);
 
     if (game.state == GAME_MENU || game.state == GAME_PAUSED) {
       ImGui_ImplOpenGL3_NewFrame();
@@ -68,13 +51,11 @@ int main(int argc, char *argv[]) {
 				glfwSetWindowShouldClose(window, GL_TRUE);
       }
       ImGui::End();
-
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     } else {
       game.update(deltaTime);
-      game.render(mainShader);
-
+      game.render();
       if (Config::devMode) {
         draw_gui();
       }
@@ -99,6 +80,15 @@ void processInput(GLFWwindow* window, GLfloat dt) {
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) game.camera.ProcessKeyboard(BACKWARD, dt);
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) game.camera.ProcessKeyboard(LEFT, dt);
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) game.camera.ProcessKeyboard(RIGHT, dt);
+  if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) game.camera.ProcessKeyboard(RUN, dt);
+  if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) game.camera.ProcessKeyboard(STOP_RUN, dt);
+  if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+    if (game.flashlight) {
+      game.flashlight = false;
+    } else {
+      game.flashlight = true;
+    }
+  }
 }
 
 void mouse_callback(GLFWwindow* window, double xPos, double yPos) { game.camera.ProcessMouseMovement(xPos, yPos); }
