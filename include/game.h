@@ -3,6 +3,8 @@
 #define GAME_H
 
 #include <vector>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -29,6 +31,7 @@ class Game {
     Camera camera = Camera(glm::vec3(-1.0f, 0.0f, 13.0f));
     GameState state;
     float flashlight = false;
+    bool keys[1024];
     void init();
     void update(float dt);
     void processInput(float dt);

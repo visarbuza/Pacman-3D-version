@@ -46,7 +46,19 @@ void Game::update(float dt) {
   }
 }
 
-void Game::processInput(float dt) {}
+void Game::processInput(float dt) {
+  if (keys[GLFW_KEY_W]) camera.ProcessKeyboard(FORWARD, dt);
+  if (keys[GLFW_KEY_S])camera.ProcessKeyboard(BACKWARD, dt);
+  if (keys[GLFW_KEY_A])camera.ProcessKeyboard(LEFT, dt);
+  if (keys[GLFW_KEY_D])camera.ProcessKeyboard(RIGHT, dt);
+  if (keys[GLFW_KEY_LEFT_SHIFT]) {
+    camera.ProcessKeyboard(RUN, dt);
+  }
+  else {
+    camera.ProcessKeyboard(STOP_RUN, dt);
+  } 
+  if (keys[GLFW_KEY_F]) flashlight = !flashlight;
+}
 
 void Game::render() {
   shader.reset();
