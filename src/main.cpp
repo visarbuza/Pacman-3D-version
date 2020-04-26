@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
   initialize_gui(window);
   
   game.init();
+
   // render loop
   while (!glfwWindowShouldClose(window)) {
     float currentFrame = glfwGetTime();
@@ -40,30 +41,13 @@ int main(int argc, char *argv[]) {
       game.processInput(deltaTime);
       game.update(deltaTime);
       game.render();
-      if (Config::devMode) {
-        draw_gui();
-      }
+      draw_gui();
     } else {
-      ImGui_ImplOpenGL3_NewFrame();
-      ImGui_ImplGlfw_NewFrame();
-      ImGui::NewFrame();
-      ImGui::Begin("Menu");
-      const char* text = game.state == GAME_MENU ? "Play game" : "Resume game";
-      if (ImGui::Button(text)) {
-        game.state = GAME_ACTIVE;
-      }
-      if (ImGui::Button("Exit")) {
-				glfwSetWindowShouldClose(window, GL_TRUE);
-      }
-      ImGui::End();
-      ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+      game_menu(game, window);
     }
-
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
-
 	clean_up(window);
   return 0;
 }

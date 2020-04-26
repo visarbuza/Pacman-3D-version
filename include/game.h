@@ -45,6 +45,7 @@ class Game {
     void displayScore();
     void setLighting();
     void setUpTransformations();
+    void checkCollision(float dt);
 };
 
 #endif

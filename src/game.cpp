@@ -47,10 +47,14 @@ void Game::update(float dt) {
 }
 
 void Game::processInput(float dt) {
+
   if (keys[GLFW_KEY_W]) camera.ProcessKeyboard(FORWARD, dt);
-  if (keys[GLFW_KEY_S])camera.ProcessKeyboard(BACKWARD, dt);
-  if (keys[GLFW_KEY_A])camera.ProcessKeyboard(LEFT, dt);
-  if (keys[GLFW_KEY_D])camera.ProcessKeyboard(RIGHT, dt);
+  if (keys[GLFW_KEY_S]) camera.ProcessKeyboard(BACKWARD, dt);
+  if (keys[GLFW_KEY_A]) camera.ProcessKeyboard(LEFT, dt);
+  if (keys[GLFW_KEY_D]) camera.ProcessKeyboard(RIGHT, dt);
+
+  checkCollision(dt);
+
   if (keys[GLFW_KEY_LEFT_SHIFT]) {
     camera.ProcessKeyboard(RUN, dt);
   }
@@ -90,4 +94,17 @@ void Game::displayScore() {
   std::stringstream ss;
   ss << this->score;
   text.renderText("Score: " + ss.str(), 5.0f, 5.0f, 1.0);
+}
+
+void Game::checkCollision(float dt) {
+  for (auto &tile : level.grid) {
+    if (tile.second) {
+      if (glm::distance(camera.Position, glm::vec3(tile.first.first, 0.0f, tile.first.second)) <= 0.7 ) {
+          if (keys[GLFW_KEY_W]) camera.ProcessKeyboard(BACKWARD, dt);
+          if (keys[GLFW_KEY_S]) camera.ProcessKeyboard(FORWARD, dt);
+          if (keys[GLFW_KEY_A]) camera.ProcessKeyboard(RIGHT, dt);
+          if (keys[GLFW_KEY_D]) camera.ProcessKeyboard(LEFT, dt);
+      }
+    }
+  }
 }
