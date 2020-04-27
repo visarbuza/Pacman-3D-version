@@ -46,7 +46,9 @@ void Game::update(float dt) {
 
   for (auto &ghost: ghosts) {
     ghost.update(dt);
+    if (glm::distance(ghost.getPosition(), camera.Position) < 0.32f) state = GAME_LOSS;
   }
+
 }
 
 void Game::processInput(float dt) {
