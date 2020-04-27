@@ -41,6 +41,9 @@ void Game::init() {
 
 void Game::update(float dt) {
   if (level.update(camera.Position.x, camera.Position.z)) score++;
+
+  if (score == 320) state = GAME_WIN; // Hard coded cuz I'm lazy :)
+
   for (auto &ghost: ghosts) {
     ghost.update(dt);
   }
@@ -76,6 +79,20 @@ void Game::render() {
   }
   displayScore();
   level.draw(shader);
+}
+
+void Game::renderEndScreen() {
+
+  std::stringstream ss;
+  ss << score;
+
+  if (state == GAME_WIN) {
+    text.renderText("You win!", 320.0, Config::SCR_HEIGHT / 2 - 20.0, 1.0);
+  } else {
+    text.renderText("You lose!", 320.0, Config::SCR_HEIGHT / 2 - 20.0, 1.0);
+  }
+
+  text.renderText("Score:" + ss.str(), 325.0, Config::SCR_HEIGHT / 2, 1.0);
 }
 
 void Game::setUpTransformations() {
