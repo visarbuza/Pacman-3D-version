@@ -11,7 +11,7 @@ struct Node {
   int x; 
   int y;
   int g, h, f;
-  Node* parent = nullptr;
+  Node *parent;
 
   Node() = default;
   Node (const Node& other) = default;

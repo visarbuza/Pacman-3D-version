@@ -37,12 +37,12 @@ void RoutePlanner::expandNeighbors(Node &current, int goal[2], std::vector<Node>
     if (checkValidTile(x2, y2, map)) {
       int g2 = g + 1;
       int h2 = heuristic(x2, y2, goal[0], goal[1]);
-      Node node(x2, y2);
-      node.g = g2;
-      node.h = h2;
-      node.f = g2 + h2;
-      node.parent = &current;
-      addTopOpen(node, openList, map);
+      Node neighbor(x2, y2);
+      neighbor.g = g2;
+      neighbor.h = h2;
+      neighbor.f = g2 + h2;
+      neighbor.parent = new Node(current);
+      addTopOpen(neighbor, openList, map);
     }
   }
 }
@@ -55,6 +55,7 @@ std::vector<std::pair<int, int>> RoutePlanner::search(std::map<std::pair<int, in
   node.g = 0;
   node.h = heuristic(start[0], start[1], end[0], end[1]);
   node.f = node.g + node.h;
+  node.parent = nullptr;
   addTopOpen(node, open, map);
 
   while (open.size() > 0) {
@@ -63,9 +64,16 @@ std::vector<std::pair<int, int>> RoutePlanner::search(std::map<std::pair<int, in
     open.pop_back();
     std::pair<int, int> temp(current.x, current.y);
     map.erase(temp);
-    result.push_back(temp);
 
     if (current.x == end[0] && current.y == end[1]) {
+      std::pair<int, int> temp(current.x, current.y);
+      result.push_back(temp);
+      while (current.parent != nullptr) {
+        std::pair<int, int> temp(current.parent->x, current.parent->y);
+        result.push_back(temp);
+        current = *current.parent;
+      }
+      std::reverse(result.begin(), result.end());
       return result;
     }
 

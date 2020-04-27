@@ -32,7 +32,7 @@ void Game::init() {
 
   for (auto &ghost: ghosts) {
     int start[2] = {(int)ghost.getPosition().x, (int)ghost.getPosition().z};
-    int end[2] = {-1, 13};
+    int end[2] = {-14, 12};
     ghost.path = route.search(level.grid, start, end);
   }
 
@@ -40,6 +40,7 @@ void Game::init() {
 }
 
 void Game::update(float dt) {
+  searchTime += dt;
   if (level.update(camera.Position.x, camera.Position.z)) score++;
 
   if (score == 320) state = GAME_WIN; // Hard coded cuz I'm lazy :)
@@ -49,6 +50,14 @@ void Game::update(float dt) {
     if (glm::distance(ghost.getPosition(), camera.Position) < 0.32f) state = GAME_LOSS;
   }
 
+  if (searchTime >= 20) {
+    searchTime = 0;
+    for (auto &ghost: ghosts) {
+      int start[2] = {(int)ghost.getPosition().x, (int)ghost.getPosition().z};
+      int end[2] = {14, -13};
+      ghost.path = route.search(level.grid, start, end);
+    }
+  }
 }
 
 void Game::processInput(float dt) {

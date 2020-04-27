@@ -38,7 +38,7 @@ class Game {
     void render();
     void renderEndScreen();
   private:
-    std::vector<Model> characters;
+    float searchTime = 0;
     std::vector<Ghost> ghosts;
     Level level;
     Shader shader;
