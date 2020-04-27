@@ -13,19 +13,19 @@ void Game::init() {
     switch (i) {
       case 0:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5)));                               
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 5.0f));                               
         break;
       case 1:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0)));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0), 6.0f));
         break;
       case 2:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0)));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0), 7.0f));
         break;
       case 3:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png",
-                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0)));
+                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 8.0f));
         break;
     }
   }
@@ -46,17 +46,15 @@ void Game::update(float dt) {
   if (score == 320) state = GAME_WIN; // Hard coded cuz I'm lazy :)
 
   for (auto &ghost: ghosts) {
-    ghost.update(dt);
-    if (glm::distance(ghost.getPosition(), camera.Position) < 0.32f) state = GAME_LOSS;
-  }
-
-  if (searchTime >= 20) {
-    searchTime = 0;
-    for (auto &ghost: ghosts) {
+    ghost.deltaTime += dt;
+    if (ghost.deltaTime >= ghost.searchTime) {
+      ghost.deltaTime = 0;
       int start[2] = {(int)ghost.getPosition().x, (int)ghost.getPosition().z};
-      int end[2] = {14, -13};
+      int end[2] = {(int)camera.Position.x, (int)camera.Position.z};
       ghost.path = route.search(level.grid, start, end);
     }
+    ghost.update(dt);
+    if (glm::distance(ghost.getPosition(), camera.Position) < 0.32f) state = GAME_LOSS;
   }
 }
 

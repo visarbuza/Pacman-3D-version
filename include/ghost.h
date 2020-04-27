@@ -26,8 +26,10 @@ class Ghost {
     void rotate();
     
   public:
+    float deltaTime = 0;
+    float searchTime;
     std::vector<std::pair<int, int>> path;
-    Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color);
+    Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color, float searchTime);
     void draw(Shader shader, int index);
     void update(float dt);
 

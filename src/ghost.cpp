@@ -1,8 +1,8 @@
 #include "ghost.h"
 #include <iostream>
 
-Ghost::Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color)
-    : position(position), nextPosition(position), front(glm::vec3(-1.0f, 0.0f, 0.0f)), color(color) {
+Ghost::Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color, float searchTime)
+    : position(position), nextPosition(position), front(glm::vec3(-1.0f, 0.0f, 0.0f)), color(color), searchTime(searchTime) {
   model = std::unique_ptr<Model>(new Model());
   model->load(modelPath, texturePath);
   rotation = 180;
