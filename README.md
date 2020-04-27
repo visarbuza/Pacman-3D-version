@@ -1,98 +1,96 @@
-# Windows
+# OpenGL 3D PacMan
 
-## Setup using Visual Studio's integrated CMake tools
+This project was made for assignment 2 in the course Graphics Programming - IMT2531.
 
-1. Get the [Visual C++ tools for CMake](https://docs.microsoft.com/en-us/cpp/ide/cmake-tools-for-visual-cpp?view=vs-2017) accessible through the Visual Studio Installer: `Tools→Get Tools and Featurs→Desktop development with C++`
+## How to setup
 
-2. Open The CMake project, either by `File→Open→Folder...`, or `File→Open→CMake...` and locate the Folder containing the `CMakeLists.txt` file relevant to this lab.
+Make sure you have [cmake](https://cmake.org/) version 3.14 or later installed.
+Navigate to the root folder of the project and execute the following commands
 
-3. Visual Studio will run CMake on the file and generate the some needed project files based on the instuctions in the file.
-
-4. Notice configurations defined within CMakeSettings.json, you might want to change the `buildRoot` property to something more sensible - This is essentially where your project will end up being built. 
-
-   - to match the folder layout with Linux setup, `buildRoot` can be set to this: `"${projectDir}\\build"`
-   - however, seeing as VS makes it easy to switch build configurations on the fly, it might be a good idea to account for that when working in VS to not mess up the CMake-generated files; hence setting `buildRoot` to `"${projectDir}\\build\\${name}"` might be more feasible.
-
-   Having said that, keeping it as is will also be fine, but the built executable will be harder to find on your system.
-
-   An example of this: `C:/Users/empoyee427/CMakeBuilds/621c328c-e411-0639-97bb-a40cd0883fa6/build/x64-Release/labxx.exe`
-
-## Setup using CMake-GUI
-
-1. Obtain [CMake-GUI](https://cmake.org/download/) and run it.
-2. Set the source code file to the root directory containing `"CMakeLists.txt"`
-3. Binaries can be built in the directory of your choice, e.g. `"<projectDir>/build/"`
-4. Click the configure button and select which generator you would like to use
-5. Click the generate button
-6. If your generator is an IDE such as Visual Studio, then open up the newly created .sln file and build ``ALL_BUILD``. After this you might want to set `labxx` as you StartUp Project.
-
-# Linux (Ubuntu)
-
-#### Initial Setup
-* Obtain Clang++ 5.0 (needed c++17 features, which the CMakeLists.txt currently assumes)
-```bash
-sudo apt-get install clang++-5.0
+On linux:
 ```
-* Install CMake (`apt-get install cmake` will get you a fairly outdated version, so we'll obtain it manually instead)
-```bash
-#Remove previous installations of cmake
-sudo apt-get remove --purge cmake
-# make a temp folder for the CMake binaries
-mkdir ~/temp 
-cd ~/temp
-# obtain the latest CMake version
-wget https://cmake.org/files/v3.13/cmake-3.13.0-Linux-x86_64.tar.gz
-# unzip the binaries
-tar -xzvf cmake-3.13.0-Linux-x86_64.tar.gz
-cd ~/temp/cmake-3.13.0-Linux-x86_64/
-    
-#place the binaries
-cp -r ./bin     /usr/    
-cp -r ./doc     /usr/share/
-cp -r ./man     /usr/share/
-cp -r ./share   /usr/
-
-cmake --version  # verify the new installation:
-                 # expected: cmake version 3.13.0
-rm -r ~/temp     # cleanup temp directory, it's no longer needed
-```
-#### Building the Project
-```bash
-cd .../<Your_Labxx_Folder>
-mkdir build/
-cd build/
-
-# Configure and Generate CMake files.
-# verify success by looking for "CMake configured Labxx successfully!"
-# The "CMAKE_CXX_COMPILER" flag is used to set clang++ 5.0 as the compiler,
-# (though any c++17 compatible compiler should in theory work here)
-cmake .. -DCMAKE_CXX_COMPILER=clang++-5.0 
-# Build the project
+mkdir build
+cd build
+cmake ..
 make
-# Run the executable
-./lab<xx>
+./Pacman3D
 ```
 
-# MacOS
-#### Initial Setup
-* Get CMake
-```bash
-# Should by default get you a fairly new version of CMake
-brew install cmake 
-# Verify that cmake version is over 3.8
-cmake --version
+On windows:
 ```
-#### Building the Project
-```bash
-mkdir build/
-cd build/
-# Configure and Generate CMake files.
-# verify success by looking for "CMake configured Labxx successfully!"
-# On MacOS Clang is the default compiler, and so we don't need to specify it like on Linux
-cmake .. 
-# Build the project
-make
-# Run the executable
-./lab<xx>
+mkdir build
+cd build
+cmake ..
+cmake --build .
+cd ..
+cd out/build/x64-Debug
+Pacman3D.exe
 ```
 
+## Controls
+
+W - Move player forward
+
+A - Move player left
+
+S - Move player backwards
+
+D - Move player right
+
+F - Toggle flashlight
+
+LShift - Sprint
+
+Esc - Pause the game
+
+Arrow keys - Navigate the menu
+
+Space - Make a selection in the menu
+
+## Functionality
+
+This game is shipped with the classic pacman map from assignment 1, now in 3D! Pacman can be moved around to collect the yellow cublets for points. At the same time he must dodge the ghosts chasing him. In this 3D version we fixed the collisions (sorry to the hardcore players who liked the challenge), no more getting stuck!
+
+The game is supposed to look and feel like a horror game, thats why Pacman has a flashlight (we don't know how he's carrying it with no hands). This flashlight can be toggled on and off. We also added sprinting for those extra spooky moments when a ghost comes out of the corner.
+
+## Version History
+
+[1.0](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/b0b2448a7c1ca5e3dacdf3ecd141f32d3261ddc3) - Added victory and death 💀
+
+[0.94](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/8df4b7a6654ae50ef3c0cab979e2e5e792129822) - Added collisions
+
+[0.93](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/695a21e1bf8840c2c1cb603fabe9ef8f9867175c) - Added lamps in the corners of the map
+
+[0.92](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/85964ce6d333ca5a81d2d2ed45bd13fe4308e481) - Added text rendering
+
+[0.91](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/694bfcc072cb03bfde64ae714b7a772e3e233562) - Added AI for ghosts
+
+[0.9](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/21ce1fc005075ed88b0fe2be74b97e5ce6a27c0e) - Added menu
+
+[0.8](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/015b04fb9f1f6a42c417c194074bb9b35173bf77) - Ghosts shine bright like a diamond
+
+[0.7](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/fec9aec31e395c905745a86dcf9d64df58c9ffbe) - Added food for Pacman
+
+[0.6](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/599034d4aabb5bce8d7d21e3fdbd973c98c59a47) - Rendered the map from a file
+
+[0.5](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/4cee27a36e2a45e0a55f9955522ef140e1dee072) - Added developer console
+
+[0.4](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/4225dc116fec106d8316103bf718641a41b85e86) - Added ghosts
+
+[0.3](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/820c29a361bdbb74b3c7310c4a2edba0e6bd08ca) - Added a spotlight with the origin in the camera to act as a flashlight
+
+[0.2](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/96b6b5d417333b23ec0d7006a2504e8038623cc4) - Added model loading
+
+[0.1](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/4fa26029b3325c556ac84ee9530d4a8ddcce87c0) - Added a movable camera
+
+## Members
+
+- Ardit Baloku (arditbaloku@gmail.com / [@arditbaloku](https://git.gvk.idi.ntnu.no/arditbaloku))
+
+- Visar Buza (visar.buza7@gmail.com / [@visarbuza](https://git.gvk.idi.ntnu.no/visarbuza))
+
+- Fatbardh Kadriu (fatbardh.kadriu@gmail.com / [@Fatbardh_Kadriu](https://git.gvk.idi.ntnu.no/Fatbardh_Kadriu))
+
+## Special mentions
+
+Thanks to [Ludvig Lilleberg](https://git.gvk.idi.ntnu.no/ludvigli) for providing us with the ghost models 

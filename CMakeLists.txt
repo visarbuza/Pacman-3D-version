@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.14 FATAL_ERROR)
-project(Graphics VERSION 2.0.0)
+project(Pacman3D VERSION 2.0.0)
 
 # Add dependencies
 add_subdirectory(external)
