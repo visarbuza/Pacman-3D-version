@@ -3,11 +3,11 @@
 
 void RoutePlanner::sort(std::vector<Node> *v) {
   std::sort(v->begin(), v->end(), [](const Node first, const Node second){
-    return (first.g + first.h) < (second.g + second.h);
+    return first > second;
   });
 }
 
-int RoutePlanner::heuristic(int x1, int x2, int y1, int y2) {
+int RoutePlanner::heuristic(int x1, int y1, int x2, int y2) {
   return std::abs(x2 - x1) + std::abs(y2 - y1);
 }
 
@@ -19,13 +19,13 @@ bool RoutePlanner::checkValidTile(int x, int y, std::map<std::pair<int, int>, bo
   return false;
 }
 
-void RoutePlanner::addTopOpen(Node current, std::vector<Node> &openList, std::map<std::pair<int, int>, bool> &map) {
+void RoutePlanner::addTopOpen(Node &current, std::vector<Node> &openList, std::map<std::pair<int, int>, bool> &map) {
   openList.push_back(current);
   std::pair<int, int> temp(current.x, current.y);
   map.erase(temp);
 }
 
-void RoutePlanner::expandNeighbors(const Node &current, int goal[2], std::vector<Node> &openList, std::map<std::pair<int, int>, bool> &map) {
+void RoutePlanner::expandNeighbors(Node &current, int goal[2], std::vector<Node> &openList, std::map<std::pair<int, int>, bool> &map) {
   int x = current.x;
   int y = current.y;
   int g = current.g;
@@ -37,7 +37,11 @@ void RoutePlanner::expandNeighbors(const Node &current, int goal[2], std::vector
     if (checkValidTile(x2, y2, map)) {
       int g2 = g + 1;
       int h2 = heuristic(x2, y2, goal[0], goal[1]);
-      Node node{x2, y2, g2, h2};
+      Node node(x2, y2);
+      node.g = g2;
+      node.h = h2;
+      node.f = g2 + h2;
+      node.parent = &current;
       addTopOpen(node, openList, map);
     }
   }
@@ -47,8 +51,10 @@ std::vector<std::pair<int, int>> RoutePlanner::search(std::map<std::pair<int, in
   std::vector<Node> open {};
   std::vector<std::pair<int, int>> result{};
 
-  Node node{start[0], start[1], 0, heuristic(start[0], start[1], end[0], end[1])};
-
+  Node node(start[0], start[1]);
+  node.g = 0;
+  node.h = heuristic(start[0], start[1], end[0], end[1]);
+  node.f = node.g + node.h;
   addTopOpen(node, open, map);
 
   while (open.size() > 0) {
