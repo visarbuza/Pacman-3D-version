@@ -36,6 +36,7 @@ class Game {
     void update(float dt);
     void processInput(float dt);
     void render();
+    void renderEndScreen();
   private:
     std::vector<Model> characters;
     std::vector<Ghost> ghosts;

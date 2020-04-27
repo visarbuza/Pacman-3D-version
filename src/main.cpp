@@ -37,7 +37,9 @@ int main(int argc, char *argv[]) {
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-    if (game.state == GAME_ACTIVE) {
+    if (game.state == GAME_WIN || game.state == GAME_LOSS) {
+      game.renderEndScreen();
+    } else if (game.state == GAME_ACTIVE) {
       game.processInput(deltaTime);
       game.update(deltaTime);
       game.render();
