@@ -13,19 +13,19 @@ void Game::init() {
     switch (i) {
       case 0:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 5.0f));                               
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 1.0f));                               
         break;
       case 1:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0), 6.0f));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0), 2.0f));
         break;
       case 2:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0), 7.0f));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0), 3.0f));
         break;
       case 3:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png",
-                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 8.0f));
+                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 4.0f));
         break;
     }
   }
