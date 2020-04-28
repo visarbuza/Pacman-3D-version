@@ -13,19 +13,19 @@ void Game::init() {
     switch (i) {
       case 0:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 1.0f));                               
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 2.0f));                               
         break;
       case 1:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0), 2.0f));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0), 3.0f));
         break;
       case 2:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0), 3.0f));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0), 4.0f));
         break;
       case 3:
         ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png",
-                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 4.0f));
+                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 5.0f));
         break;
     }
   }
@@ -40,7 +40,6 @@ void Game::init() {
 }
 
 void Game::update(float dt) {
-  searchTime += dt;
   if (level.update(camera.Position.x, camera.Position.z)) score++;
 
   if (score == 320) state = GAME_WIN; // Hard coded cuz I'm lazy :)
@@ -74,6 +73,10 @@ void Game::processInput(float dt) {
     camera.ProcessKeyboard(STOP_RUN, dt);
   } 
   if (keys[GLFW_KEY_F]) flashlight = !flashlight;
+
+  if (keys[GLFW_KEY_M]) {
+    firstPerson = !firstPerson;
+  }
 }
 
 void Game::render() {
@@ -106,7 +109,13 @@ void Game::renderEndScreen() {
 
 void Game::setUpTransformations() {
   auto projection = glm::perspective(glm::radians(50.f), 16.f / 9.f, 0.01f, 650.f);
-  shader.setMat4("view", camera.GetViewMatrix());
+  auto lookAt = glm::mat4(1.0f);
+  if (firstPerson) {
+    lookAt = camera.GetViewMatrix();
+  } else {
+    lookAt = glm::lookAt(glm::vec3(camera.Position.x, 15.0f, camera.Position.z), camera.Position, glm::vec3(0.0f, 0.0f, -1.0f));
+  }
+  shader.setMat4("view", lookAt);
   shader.setMat4("projection", projection);
 }
 

@@ -38,7 +38,7 @@ class Game {
     void render();
     void renderEndScreen();
   private:
-    float searchTime = 0;
+    bool firstPerson = true;
     std::vector<Ghost> ghosts;
     Level level;
     Shader shader;
