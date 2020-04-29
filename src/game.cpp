@@ -25,7 +25,7 @@ void Game::init() {
         break;
       case 3:
         ghosts.push_back(Ghost(i, "resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png",
-                               glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 5.0f));
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 5.0f));
         break;
     }
   }
