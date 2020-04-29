@@ -1,52 +1,43 @@
 #include "game.h"
 
 void Game::init() {
-  shader = Shader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
-
   state = GAME_MENU;
-  level.load();
-
+  shader = Shader("../resources/shaders/vertex.vert", "../resources/shaders/fragment.frag");
   text = TextRenderer(Config::SCR_WIDTH, Config::SCR_HEIGHT);
   text.load("resources/fonts/ocraext.TTF", 24);
 
+  level.load();
   player.load("resources/models/sphere.obj", "resources/textures/food.jpg");
 
   for (int i = 0; i < 4; i++) {
     switch (i) {
       case 0:
-        ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png",
-                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 2.0f));                               
+        ghosts.push_back(Ghost(i, "resources/models/ghost.obj", "resources/textures/ghost_texture_pink.png",
+                               glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.08, 0.5), 2.0f));
         break;
       case 1:
-        ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_red.png",
+        ghosts.push_back(Ghost(i, "resources/models/ghost.obj", "resources/textures/ghost_texture_red.png",
                                glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(1.0, 0.0, 0.0), 3.0f));
         break;
       case 2:
-        ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png",
+        ghosts.push_back(Ghost(i, "resources/models/ghost.obj", "resources/textures/ghost_texture_blue.png",
                                glm::vec3(-1.0, 0.0f, 1 - i), glm::vec3(0.0, 0.0, 1.0), 4.0f));
         break;
       case 3:
-        ghosts.push_back(Ghost("resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png",
+        ghosts.push_back(Ghost(i, "resources/models/ghost.obj", "resources/textures/ghost_texture_orange.png",
                                glm::vec3(0.0, 0.0f, 1 - i), glm::vec3(1.0, 1.0, 0.0), 5.0f));
         break;
     }
   }
-
-  for (auto &ghost: ghosts) {
-    int start[2] = {(int)ghost.getPosition().x, (int)ghost.getPosition().z};
-    int end[2] = {-14, 12};
-    ghost.path = route.search(level.grid, start, end);
-  }
-
   score = 0;
 }
 
 void Game::update(float dt) {
+  if (score == 320) state = GAME_WIN;  // Hard coded cuz I'm lazy :)
+  checkCollision(dt);
   if (level.update(camera.Position.x, camera.Position.z)) score++;
-
-  if (score == 320) state = GAME_WIN; // Hard coded cuz I'm lazy :)
-
-  for (auto &ghost: ghosts) {
+  
+  for (auto &ghost : ghosts) {
     ghost.deltaTime += dt;
     if (ghost.deltaTime >= ghost.searchTime) {
       ghost.deltaTime = 0;
@@ -60,24 +51,16 @@ void Game::update(float dt) {
 }
 
 void Game::processInput(float dt) {
-
   if (keys[GLFW_KEY_W]) camera.ProcessKeyboard(FORWARD, dt);
   if (keys[GLFW_KEY_S]) camera.ProcessKeyboard(BACKWARD, dt);
   if (keys[GLFW_KEY_A]) camera.ProcessKeyboard(LEFT, dt);
   if (keys[GLFW_KEY_D]) camera.ProcessKeyboard(RIGHT, dt);
-
-  checkCollision(dt);
-
+  if (keys[GLFW_KEY_F]) flashlight = !flashlight;
+  if (keys[GLFW_KEY_M]) view = (view + 1) % 3;
   if (keys[GLFW_KEY_LEFT_SHIFT]) {
     camera.ProcessKeyboard(RUN, dt);
-  }
-  else {
+  } else {
     camera.ProcessKeyboard(STOP_RUN, dt);
-  } 
-  if (keys[GLFW_KEY_F]) flashlight = !flashlight;
-
-  if (keys[GLFW_KEY_M]) {
-    view = (view + 1) % 3;
   }
 }
 
@@ -85,22 +68,17 @@ void Game::render() {
   shader.reset();
   setLighting();
   setUpTransformations();
-  
-  auto i = 0;
-  for (auto& ghost : ghosts) {
-    ghost.draw(shader, i);
-    i++;
+
+  for (auto &ghost : ghosts) {
+    ghost.draw(shader);
   }
-  if (view != FIRST_PERSON) {
-    player.draw(camera.Position, 0.06, 0, shader);
-  }
-  
-  displayScore();
   level.draw(shader);
+  drawPlayer();
+
+  displayScore();
 }
 
 void Game::renderEndScreen() {
-
   std::stringstream ss;
   ss << score;
 
@@ -116,14 +94,17 @@ void Game::renderEndScreen() {
 void Game::setUpTransformations() {
   auto projection = glm::perspective(glm::radians(50.f), 16.f / 9.f, 0.01f, 650.f);
   auto lookAt = glm::mat4(1.0f);
-  
+
   switch (view) {
     case FIRST_PERSON:
-      lookAt = camera.GetFirstPersonView(); break;
+      lookAt = camera.GetFirstPersonView();
+      break;
     case THIRD_PERSON:
-      lookAt = camera.GetThirdPersonView(); break;
+      lookAt = camera.GetThirdPersonView();
+      break;
     case BIRD_VIEW:
-      lookAt = camera.Get2DView(); break;
+      lookAt = camera.Get2DView();
+      break;
   }
 
   shader.setMat4("view", lookAt);
@@ -145,12 +126,18 @@ void Game::displayScore() {
 void Game::checkCollision(float dt) {
   for (auto &tile : level.grid) {
     if (tile.second) {
-      if (glm::distance(camera.Position, glm::vec3(tile.first.first, 0.0f, tile.first.second)) <= 0.7 ) {
-          if (keys[GLFW_KEY_W]) camera.ProcessKeyboard(BACKWARD, dt);
-          if (keys[GLFW_KEY_S]) camera.ProcessKeyboard(FORWARD, dt);
-          if (keys[GLFW_KEY_A]) camera.ProcessKeyboard(RIGHT, dt);
-          if (keys[GLFW_KEY_D]) camera.ProcessKeyboard(LEFT, dt);
+      if (glm::distance(camera.Position, glm::vec3(tile.first.first, 0.0f, tile.first.second)) <= 0.7) {
+        if (keys[GLFW_KEY_W]) camera.ProcessKeyboard(BACKWARD, dt);
+        if (keys[GLFW_KEY_S]) camera.ProcessKeyboard(FORWARD, dt);
+        if (keys[GLFW_KEY_A]) camera.ProcessKeyboard(RIGHT, dt);
+        if (keys[GLFW_KEY_D]) camera.ProcessKeyboard(LEFT, dt);
       }
     }
+  }
+}
+
+void Game::drawPlayer() {
+  if (view != FIRST_PERSON) {
+    player.draw(camera.Position, 0.06, 0, shader);
   }
 }

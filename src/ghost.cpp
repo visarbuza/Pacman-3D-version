@@ -1,8 +1,14 @@
 #include "ghost.h"
 #include <iostream>
 
-Ghost::Ghost(std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color, float searchTime)
-    : position(position), nextPosition(position), front(glm::vec3(-1.0f, 0.0f, 0.0f)), color(color), searchTime(searchTime) {
+Ghost::Ghost(int id, std::string modelPath, std::string texturePath, glm::vec3 position, glm::vec3 color,
+             float searchTime)
+    : id(id),
+      position(position),
+      nextPosition(position),
+      front(glm::vec3(-1.0f, 0.0f, 0.0f)),
+      color(color),
+      searchTime(searchTime) {
   model = std::unique_ptr<Model>(new Model());
   model->load(modelPath, texturePath);
   rotation = 180;
@@ -24,20 +30,19 @@ void Ghost::update(float dt) {
   position += front * velocity;
 }
 
-void Ghost::draw(Shader shader, int index) {
+void Ghost::draw(Shader shader) {
   shader.use();
-  shader.setGhostLight(this->position, this->color, index);
+  shader.setGhostLight(this->position, this->color, id);
   model->draw(this->position, 0.2, rotation, shader);
 }
 
 void Ghost::rotate() {
   crossProduct = glm::cross(front, direction);
   dotProduct = glm::dot(front, direction);
-  
+
   if (crossProduct.y < 0) {
     rotation += glm::degrees(glm::acos(dotProduct)) * (-1);
   } else {
     rotation += glm::degrees(glm::acos(dotProduct));
   }
-  rotation = rotation % 360;
 }

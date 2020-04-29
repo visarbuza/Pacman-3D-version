@@ -32,21 +32,20 @@ enum CameraState {
 
 class Game {
   public:
+    bool keys[1024];
     unsigned int score;
+    float flashlight = false;
+    GameState state;
     RoutePlanner route;
     Camera camera = Camera(glm::vec3(-1.0f, 0.0f, 13.0f));
-    GameState state;
-    float flashlight = false;
-    bool keys[1024];
     void init();
     void update(float dt);
     void processInput(float dt);
     void render();
     void renderEndScreen();
   private:
-    Model player;
     int view = 0;
-    bool firstPerson = true;
+    Model player;
     std::vector<Ghost> ghosts;
     Level level;
     Shader shader;
@@ -55,6 +54,7 @@ class Game {
     void setLighting();
     void setUpTransformations();
     void checkCollision(float dt);
+    void drawPlayer();
 };
 
 #endif
