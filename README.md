@@ -1,7 +1,8 @@
 # OpenGL 3D PacMan
 
 This project was made for assignment 2 in the course Graphics Programming - IMT2531.
-
+![picture](resources/images/ghots.png)
+![picture](resources/images/2d.png)
 ## How to setup
 
 Make sure you have [cmake](https://cmake.org/) version 3.14 or later installed.
