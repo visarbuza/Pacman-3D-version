@@ -40,6 +40,8 @@ D - Move player right
 
 F - Toggle flashlight
 
+M - Switch between first-person, third-person and top down view
+
 LShift - Sprint
 
 Esc - Pause the game
@@ -52,11 +54,15 @@ Space - Make a selection in the menu
 
 This game is shipped with the classic pacman map from assignment 1, now in 3D! Pacman can be moved around to collect the yellow cublets for points. At the same time he must dodge the ghosts chasing him. In this 3D version we fixed the collisions (sorry to the hardcore players who liked the challenge), no more getting stuck!
 
-The game is supposed to look and feel like a horror game, thats why Pacman has a flashlight (we don't know how he's carrying it with no hands). This flashlight can be toggled on and off. We also added sprinting for those extra spooky moments when a ghost comes out of the corner.
+The game is supposed to look and feel like a horror game, thats why Pacman has a flashlight (we don't know how he's carrying it with no hands). This flashlight can be toggled on and off. We also added sprinting for those extra spooky moments when a ghost comes out of the corner. If playing in first-person isn't your cup of tea, don't fret! The game offers 3 different perspectives to play from, first-person, third-person and a top down view.
 
 ## Version History
 
-[1.0](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/b0b2448a7c1ca5e3dacdf3ecd141f32d3261ddc3) - Added victory and death 💀
+[1.2](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/917213ac4b2185e3b3fb898b7cb3d69ec707917c) - Added a third person view
+
+[1.1](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/96b489bfda288344ac2d7facd0af6566db1878bc) - Added a top down view
+
+[1.0](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/b0b2448a7c1ca5e3dacdf3ecd141f32d3261ddc3) - Added victory and death
 
 [0.94](https://git.gvk.idi.ntnu.no/visarbuza/imt2531_assignment_2/-/commit/8df4b7a6654ae50ef3c0cab979e2e5e792129822) - Added collisions
 
