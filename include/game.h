@@ -24,6 +24,12 @@ enum GameState {
     GAME_LOSS
 };
 
+enum CameraState {
+  FIRST_PERSON,
+  THIRD_PERSON,
+  BIRD_VIEW
+};
+
 class Game {
   public:
     unsigned int score;
@@ -38,6 +44,8 @@ class Game {
     void render();
     void renderEndScreen();
   private:
+    Model player;
+    int view = 0;
     bool firstPerson = true;
     std::vector<Ghost> ghosts;
     Level level;

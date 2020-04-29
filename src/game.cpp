@@ -9,6 +9,8 @@ void Game::init() {
   text = TextRenderer(Config::SCR_WIDTH, Config::SCR_HEIGHT);
   text.load("resources/fonts/ocraext.TTF", 24);
 
+  player.load("resources/models/sphere.obj", "resources/textures/food.jpg");
+
   for (int i = 0; i < 4; i++) {
     switch (i) {
       case 0:
@@ -75,7 +77,7 @@ void Game::processInput(float dt) {
   if (keys[GLFW_KEY_F]) flashlight = !flashlight;
 
   if (keys[GLFW_KEY_M]) {
-    firstPerson = !firstPerson;
+    view = (view + 1) % 3;
   }
 }
 
@@ -89,6 +91,10 @@ void Game::render() {
     ghost.draw(shader, i);
     i++;
   }
+  if (view != FIRST_PERSON) {
+    player.draw(camera.Position, 0.06, 0, shader);
+  }
+  
   displayScore();
   level.draw(shader);
 }
@@ -110,11 +116,16 @@ void Game::renderEndScreen() {
 void Game::setUpTransformations() {
   auto projection = glm::perspective(glm::radians(50.f), 16.f / 9.f, 0.01f, 650.f);
   auto lookAt = glm::mat4(1.0f);
-  if (firstPerson) {
-    lookAt = camera.GetViewMatrix();
-  } else {
-    lookAt = glm::lookAt(glm::vec3(camera.Position.x, 15.0f, camera.Position.z), camera.Position, glm::vec3(0.0f, 0.0f, -1.0f));
+  
+  switch (view) {
+    case FIRST_PERSON:
+      lookAt = camera.GetFirstPersonView(); break;
+    case THIRD_PERSON:
+      lookAt = camera.GetThirdPersonView(); break;
+    case BIRD_VIEW:
+      lookAt = camera.Get2DView(); break;
   }
+
   shader.setMat4("view", lookAt);
   shader.setMat4("projection", projection);
 }

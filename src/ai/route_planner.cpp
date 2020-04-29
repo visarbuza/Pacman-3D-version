@@ -7,10 +7,12 @@ void RoutePlanner::sort(std::vector<Node> *v) {
   });
 }
 
+// Calculate the heuristic function
 int RoutePlanner::heuristic(int x1, int y1, int x2, int y2) {
   return std::abs(x2 - x1) + std::abs(y2 - y1);
 }
 
+// Check if the given tile is inside the map and it is not a wall
 bool RoutePlanner::checkValidTile(int x, int y, std::map<std::pair<int, int>, bool> &map) {
   std::pair<int, int> temp(x, y);
   if (map.find(temp) != map.end()) {
@@ -19,12 +21,14 @@ bool RoutePlanner::checkValidTile(int x, int y, std::map<std::pair<int, int>, bo
   return false;
 }
 
+// add this node to the open list
 void RoutePlanner::addTopOpen(Node &current, std::vector<Node> &openList, std::map<std::pair<int, int>, bool> &map) {
   openList.push_back(current);
   std::pair<int, int> temp(current.x, current.y);
   map.erase(temp);
 }
 
+// expand the neighbors of the current node
 void RoutePlanner::expandNeighbors(Node &current, int goal[2], std::vector<Node> &openList, std::map<std::pair<int, int>, bool> &map) {
   int x = current.x;
   int y = current.y;
@@ -47,6 +51,7 @@ void RoutePlanner::expandNeighbors(Node &current, int goal[2], std::vector<Node>
   }
 }
 
+// A* star search main loop
 std::vector<std::pair<int, int>> RoutePlanner::search(std::map<std::pair<int, int>, bool> map, int start[2], int end[2]) {
   std::vector<Node> open {};
   std::vector<std::pair<int, int>> result{};

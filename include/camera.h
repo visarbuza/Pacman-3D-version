@@ -62,7 +62,18 @@ class Camera {
   }
 
   // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
-  glm::mat4 GetViewMatrix() { return glm::lookAt(Position, Position + Front, Up); }
+  // First Person
+  glm::mat4 GetFirstPersonView() { return glm::lookAt(Position, Position + Front, Up); }
+
+  // Third person view
+  glm::mat4 GetThirdPersonView() {
+    return glm::lookAt(glm::vec3(Position.x - (Front.x), 1.0, Position.z - Front.z), Position + Front, Up);
+  }
+
+  // Birds eye view
+  glm::mat4 Get2DView() {
+    return glm::lookAt(glm::vec3(Position.x, 15.0f, Position.z), Position, glm::vec3(0.0f, 0.0f, -1.0f));
+  }
 
   // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined
   // ENUM (to abstract it from windowing systems)
