@@ -1,0 +1,37 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug (default)",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "FREETYPE_INCLUDE_DIR_ft2build",
+          "value": "C:/Programming/Graphics/Pacman-3D-version/external/freetype-windows-binaries-master/include",
+          "type": "PATH"
+        },
+        {
+          "name": "FREETYPE_INCLUDE_DIR_freetype2",
+          "value": "C:/Programming/Graphics/Pacman-3D-version/external/freetype-windows-binaries-master/include",
+          "type": "PATH"
+        },
+        {
+          "name": "FREETYPE_LIBRARY",
+          "value": "C:\\Programming\\Graphics\\Pacman-3D-version\\external\\freetype-windows-binaries-master\\release dll\\win64\\freetype.lib",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "IRRKLANG_LIBRARY_DIR",
+          "value": "C:/Programming/Graphics/Pacman-3D-version/external/irrKlang/include",
+          "type": "PATH"
+        }
+      ]
+    }
+  ]
+}
