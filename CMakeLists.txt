@@ -10,6 +10,26 @@ add_executable(${PROJECT_NAME})
 # Find freetype
 find_package(Freetype REQUIRED)
 
+add_library(irrKlang SHARED IMPORTED)
+if (WIN32)
+  set_target_properties(irrKlang PROPERTIES LINKER_LANGUAGE CXX
+                                  IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/bin/winx64-visualStudio/irrKlang.dll"
+                                  IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/bin/winx64-visualStudio/ikpMP3.dll"
+                                  IMPORTED_IMPLIB   "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/lib/Winx64-visualStudio/irrKlang.lib"
+                                  INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/include")
+endif (WIN32)
+if (UNIX)
+  set_target_properties(irrKlang PROPERTIES LINKER_LANGUAGE CXX
+                                  IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/bin/linux-gcc/irrKlang.so"
+                                  IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/bin/linux-gcc/ikpMP3.so"
+                                  INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/include")
+endif (UNIX)
+
+
+set_target_properties(irrKlang PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(irrKlang PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+
 # Add additional source files here
 target_sources(
     ${PROJECT_NAME}
@@ -56,6 +76,9 @@ target_include_directories(
     ${CMAKE_CURRENT_LIST_DIR}/include
     ${CMAKE_CURRENT_LIST_DIR}/src
     ${FREETYPE_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/bin/winx64-visualStudio
+    ${CMAKE_CURRENT_LIST_DIR}/external/irrKlang/include/
+
 )
 
 # Link with external libraries
@@ -69,6 +92,8 @@ target_link_libraries(
     stbimage::stbimage
     tinyobj::tinyobj
     ${FREETYPE_LIBRARIES}
+
+     irrKlang
 )
 
 # Enable C++ 17
