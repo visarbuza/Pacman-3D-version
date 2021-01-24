@@ -1,4 +1,7 @@
-# OpenGL 3D PacMan with A* Search
+# OpenGL 3D PacMan
+
+## Uses OpenGl Api to render everything on screen.
+## Implements A star search algorithm
 
 This project was made for assignment 2 in the course Graphics Programming - IMT2531.
 ![picture](resources/images/ghosts.png)
