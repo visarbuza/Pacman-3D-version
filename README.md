@@ -1,4 +1,4 @@
-# OpenGL 3D PacMan
+# OpenGL 3D PacMan with A* Search
 
 This project was made for assignment 2 in the course Graphics Programming - IMT2531.
 ![picture](resources/images/ghosts.png)
